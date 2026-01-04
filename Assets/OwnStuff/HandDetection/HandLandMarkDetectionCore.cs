@@ -12,7 +12,6 @@ using UnityEngine.Rendering;
 
 public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 {
-    //[SerializeField] private Mediapipe.Unity.HandLandmarkerResultAnnotationController _handLandmarkerResultAnnotationController;
     [SerializeField] private HandLandMarkResultAnnotation _handLandmarkerResultAnnotationController;
 
     private Mediapipe.Unity.Experimental.TextureFramePool _textureFramePool;

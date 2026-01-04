@@ -129,6 +129,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8837774153085666347, guid: 87a9be2a7620991a78342ef9a56fa62c,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8837774153085666347, guid: 87a9be2a7620991a78342ef9a56fa62c,
+        type: 3}
       propertyPath: _leftLandmarkColor.b
       value: 0.29566693
       objectReference: {fileID: 0}
@@ -215,7 +220,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7434967355688441420, guid: 87a9be2a7620991a78342ef9a56fa62c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1200896668}
   m_SourcePrefab: {fileID: 100100000, guid: 87a9be2a7620991a78342ef9a56fa62c, type: 3}
 --- !u!4 &227034122 stripped
 Transform:
@@ -223,18 +232,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 227034121}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &227034123 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -8837774153085666347, guid: 87a9be2a7620991a78342ef9a56fa62c,
-    type: 3}
-  m_PrefabInstance: {fileID: 227034121}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ba3c50c2cb46dc9e916dd3a33c8a488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &420786853
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d934866958e807f43bdb1a1ec9a34c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandLandMarkResultAnnotation
-  annotation: {fileID: 227034123}
+  annotation: {fileID: 1200896668}
   _visualizeZ: 0
 --- !u!1 &1064799459
 GameObject:
@@ -527,6 +524,31 @@ MonoBehaviour:
   screen: {fileID: 1006057043}
   runningMode: 0
   _handLandmarkerResultAnnotationController: {fileID: 1006057045}
+--- !u!1 &1200896667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7434967355688441420, guid: 87a9be2a7620991a78342ef9a56fa62c,
+    type: 3}
+  m_PrefabInstance: {fileID: 227034121}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1200896668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200896667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f227f1d8a5920514f8c0079757f5e13a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiHandLandmarkListAnnotation
+  _annotationPrefab: {fileID: 4724242833946851653, guid: b420c3106bd9cc5b6871a7df5459dba0,
+    type: 3}
+  _leftLandmarkColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _rightLandmarkColor: {r: 1, g: 0, b: 0, a: 1}
+  _landmarkRadius: 15
+  _connectionColor: {r: 1, g: 1, b: 1, a: 1}
+  _connectionWidth: 1
 --- !u!224 &1229135957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3259285889726014650, guid: 5713b959e3c77a58fb258133fc8e4aef,
