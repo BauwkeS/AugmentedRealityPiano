@@ -13,8 +13,8 @@ using Mediapipe.Unity.Sample.HandLandmarkDetection;
 
 public class HandLandMarkDetectionCore : Mediapipe.Unity.Sample.VisionTaskApiRunner<HandLandmarker>
 {
-    [SerializeField] private Mediapipe.Unity.HandLandmarkerResultAnnotationController _handLandmarkerResultAnnotationController;
-    //[SerializeField] private HandLandMarkResultAnnotation _handLandmarkerResultAnnotationController;
+    //[SerializeField] private Mediapipe.Unity.HandLandmarkerResultAnnotationController _handLandmarkerResultAnnotationController;
+    [SerializeField] private HandLandMarkResultAnnotation _handLandmarkerResultAnnotationController;
 
     private Mediapipe.Unity.Experimental.TextureFramePool _textureFramePool;
 
