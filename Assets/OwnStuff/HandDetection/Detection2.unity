@@ -505,8 +505,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1064799461}
+  - component: {fileID: 1064799468}
   - component: {fileID: 1064799469}
-  - component: {fileID: 1064799470}
   m_Layer: 0
   m_Name: Solution
   m_TagString: Untagged
@@ -529,24 +529,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1064799469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1064799459}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc23a72f64ea9314a93b9d92a1227bbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandLandMarkDetectionCore
-  _bootstrapPrefab: {fileID: 968918444066301895, guid: 1146a9de09159a948b683e94fb3d3c95,
-    type: 3}
-  screen: {fileID: 1006057043}
-  runningMode: 0
-  _handLandmarkerResultAnnotationController: {fileID: 1006057044}
---- !u!114 &1064799470
+--- !u!114 &1064799468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -563,6 +546,23 @@ MonoBehaviour:
   screen: {fileID: 1006057043}
   runningMode: 0
   _handLandmarkerResultAnnotationController: {fileID: 1006057044}
+--- !u!114 &1064799469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064799459}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc23a72f64ea9314a93b9d92a1227bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandLandMarkDetectionCore
+  _bootstrapPrefab: {fileID: 968918444066301895, guid: 1146a9de09159a948b683e94fb3d3c95,
+    type: 3}
+  screen: {fileID: 1006057043}
+  runningMode: 0
+  _handLandmarkerResultAnnotationController: {fileID: 0}
 --- !u!224 &1229135957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3259285889726014650, guid: 5713b959e3c77a58fb258133fc8e4aef,
@@ -785,11 +785,6 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 452783113388284038, guid: 54f580d6a6348474296b578c5a3244b2,
         type: 3}
-      propertyPath: MultiHands
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 452783113388284038, guid: 54f580d6a6348474296b578c5a3244b2,
-        type: 3}
       propertyPath: canvasRect
       value: 
       objectReference: {fileID: 436436030}
@@ -868,11 +863,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MediaPipeMapper
-      objectReference: {fileID: 0}
-    - target: {fileID: 5971684008085159592, guid: 54f580d6a6348474296b578c5a3244b2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1091,7 +1081,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _baseRunner
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1064799468}
     - target: {fileID: 8571076843237194837, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_IsActive
