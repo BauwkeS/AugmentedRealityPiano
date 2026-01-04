@@ -774,7 +774,7 @@ MonoBehaviour:
   m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
+  m_KeyboardType: 2
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 1
@@ -1663,9 +1663,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 978570817340810854}
-        m_TargetAssemblyTypeName: Mediapipe.Unity.Sample.HandLandmarkDetection.UI.HandLandmarkDetectionConfigWindow,
-          Mediapipe.Unity.Sample
+      - m_Target: {fileID: 2590110580072376560}
+        m_TargetAssemblyTypeName: DetectionConfigWindow, Assembly-CSharp
         m_MethodName: Exit
         m_Mode: 1
         m_Arguments:
@@ -5512,9 +5511,10 @@ GameObject:
   - component: {fileID: 7554452920844835529}
   - component: {fileID: 3937602636113306571}
   - component: {fileID: 7150646400474069085}
+  - component: {fileID: 2590110580072376560}
   - component: {fileID: 978570817340810854}
   m_Layer: 5
-  m_Name: Hand Landmark Detection Config Window
+  m_Name: Detection Config Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5605,7 +5605,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &978570817340810854
+--- !u!114 &2590110580072376560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5613,6 +5613,25 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7355513348742275121}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b374facf568e14d91ed991489e0b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DetectionConfigWindow
+  _delegateInput: {fileID: 5897406473064604676}
+  _imageReadModeInput: {fileID: 7593092193497313658}
+  _runningModeInput: {fileID: 5897406473064604676}
+  _numHandsInput: {fileID: 8550149827282968167}
+  _minHandDetectionConfidenceInput: {fileID: 3929369997890443683}
+  _minHandPresenceConfidenceInput: {fileID: 355459864437080859}
+  _minTrackingConfidenceInput: {fileID: 4124374882758686014}
+--- !u!114 &978570817340810854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7355513348742275121}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c4d18f994c2cb51282484e339c69005, type: 3}
   m_Name: 

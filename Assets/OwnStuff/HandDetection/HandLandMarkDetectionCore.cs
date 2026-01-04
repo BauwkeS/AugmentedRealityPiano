@@ -18,7 +18,7 @@ public class HandLandMarkDetectionCore : Mediapipe.Unity.Sample.VisionTaskApiRun
 
     private Mediapipe.Unity.Experimental.TextureFramePool _textureFramePool;
 
-    public readonly HandLandmarkDetectionConfig config = new HandLandmarkDetectionConfig();
+    public readonly DetectionConfig config = new DetectionConfig();
 
     public override void Stop()
     {

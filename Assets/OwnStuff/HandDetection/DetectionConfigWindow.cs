@@ -7,10 +7,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Mediapipe.Unity.Sample.UI;
+using Mediapipe.Unity.Sample;
 
-namespace Mediapipe.Unity.Sample.HandLandmarkDetection.UI
-{
-  public class HandLandmarkDetectionConfigWindow : ModalContents
+public class DetectionConfigWindow : ModalContents
   {
     [SerializeField] private Dropdown _delegateInput;
     [SerializeField] private Dropdown _imageReadModeInput;
@@ -20,13 +19,13 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection.UI
     [SerializeField] private InputField _minHandPresenceConfidenceInput;
     [SerializeField] private InputField _minTrackingConfidenceInput;
 
-    private HandLandmarkDetectionConfig _config;
+    private DetectionConfig _config;
     private bool _isChanged;
 
     private void Start()
     {
-      _config = GameObject.Find("Solution").GetComponent<HandLandmarkerRunner>().config;
-      //_config = GameObject.Find("Solution").GetComponent<HandLandMarkDetectionCore>().config;
+      //_config = GameObject.Find("Solution").GetComponent<HandLandmarkerRunner>().config;
+      _config = GameObject.Find("Solution").GetComponent<HandLandMarkDetectionCore>().config;
       InitializeContents();
     }
 
@@ -37,19 +36,19 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection.UI
 
     private void SwitchDelegate()
     {
-      _config.Delegate = (Tasks.Core.BaseOptions.Delegate)_delegateInput.value;
+      _config.Delegate = (Mediapipe.Tasks.Core.BaseOptions.Delegate)_delegateInput.value;
       _isChanged = true;
     }
 
     private void SwitchImageReadMode()
     {
-      _config.ImageReadMode = (ImageReadMode)_imageReadModeInput.value;
+      _config.ImageReadMode = (Mediapipe.Unity.ImageReadMode)_imageReadModeInput.value;
       _isChanged = true;
     }
 
     private void SwitchRunningMode()
     {
-      _config.RunningMode = (Tasks.Vision.Core.RunningMode)_runningModeInput.value;
+      _config.RunningMode = (Mediapipe.Tasks.Vision.Core.RunningMode)_runningModeInput.value;
       _isChanged = true;
     }
 
@@ -103,19 +102,19 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection.UI
 
     private void InitializeDelegate()
     {
-      InitializeDropdown<Tasks.Core.BaseOptions.Delegate>(_delegateInput, _config.Delegate.ToString());
+      InitializeDropdown<Mediapipe.Tasks.Core.BaseOptions.Delegate>(_delegateInput, _config.Delegate.ToString());
       _delegateInput.onValueChanged.AddListener(delegate { SwitchDelegate(); });
     }
 
     private void InitializeImageReadMode()
     {
-      InitializeDropdown<ImageReadMode>(_imageReadModeInput, _config.ImageReadMode.GetDescription());
+      InitializeDropdown<Mediapipe.Unity.ImageReadMode>(_imageReadModeInput, _config.ImageReadMode.GetDescription());
       _imageReadModeInput.onValueChanged.AddListener(delegate { SwitchImageReadMode(); });
     }
 
     private void InitializeRunningMode()
     {
-      InitializeDropdown<Tasks.Vision.Core.RunningMode>(_runningModeInput, _config.RunningMode.ToString());
+      InitializeDropdown<Mediapipe.Tasks.Vision.Core.RunningMode>(_runningModeInput, _config.RunningMode.ToString());
       _runningModeInput.onValueChanged.AddListener(delegate { SwitchRunningMode(); });
     }
 
@@ -143,4 +142,3 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection.UI
       _minTrackingConfidenceInput.onValueChanged.AddListener(delegate { SetMinTrackingConfidence(); });
     }
   }
-}
