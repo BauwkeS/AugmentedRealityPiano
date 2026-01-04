@@ -8,10 +8,9 @@ using System.Collections;
 using Mediapipe.Tasks.Vision.HandLandmarker;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Mediapipe.Unity.Sample.HandLandmarkDetection;
 
 
-public class HandLandMarkDetectionCore : Mediapipe.Unity.Sample.VisionTaskApiRunner<HandLandmarker>
+public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 {
     //[SerializeField] private Mediapipe.Unity.HandLandmarkerResultAnnotationController _handLandmarkerResultAnnotationController;
     [SerializeField] private HandLandMarkResultAnnotation _handLandmarkerResultAnnotationController;
