@@ -125,8 +125,13 @@ namespace Mediapipe.Unity
     {
       _rightLandmarkColor = rightLandmarkColor;
     }
+ public void SetLandmarkColor(Color rightLandmarkColor)
+    {
+      _rightLandmarkColor = rightLandmarkColor;
+      _leftLandmarkColor = rightLandmarkColor;
+    }
 
-    public void SetLandmarkRadius(float landmarkRadius)
+        public void SetLandmarkRadius(float landmarkRadius)
     {
       _landmarkListAnnotation.SetRadius(landmarkRadius);
     }

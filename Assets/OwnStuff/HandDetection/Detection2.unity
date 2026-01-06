@@ -217,7 +217,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8837774153085666347, guid: 87a9be2a7620991a78342ef9a56fa62c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -542,13 +543,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f227f1d8a5920514f8c0079757f5e13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiHandLandmarkListAnnotation
-  _annotationPrefab: {fileID: 4724242833946851653, guid: b420c3106bd9cc5b6871a7df5459dba0,
+  _annotationPrefab: {fileID: 4724242833946851653, guid: 0356189a1e0d6f140bcbf6fd8cced3ca,
     type: 3}
-  _leftLandmarkColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  _rightLandmarkColor: {r: 1, g: 0, b: 0, a: 1}
+  _handLandmarkColor: {r: 0, g: 0, b: 1, a: 1}
   _landmarkRadius: 15
   _connectionColor: {r: 1, g: 1, b: 1, a: 1}
   _connectionWidth: 1
+  _landmarkListAnnotation: {fileID: 0}
+  _connectionListAnnotation: {fileID: 0}
+  _fingertipLandmarkColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!224 &1229135957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3259285889726014650, guid: 5713b959e3c77a58fb258133fc8e4aef,

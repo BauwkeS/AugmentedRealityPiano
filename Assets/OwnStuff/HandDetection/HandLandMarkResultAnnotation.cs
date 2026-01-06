@@ -78,7 +78,8 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
         lock (_currentTargetLock)
         {
             isStale = false;
-            annotation.SetHandedness(_currentTarget.handedness);
+            //annotation.SetHandedness(_currentTarget.handedness);
+            annotation.SetThoseColors();
             annotation.Draw(_currentTarget.handLandmarks, _visualizeZ);
         }
     }
