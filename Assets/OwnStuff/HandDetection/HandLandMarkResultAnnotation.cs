@@ -83,20 +83,20 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
         }
     }
 
-    protected void UpdateCurrentTarget<TValue>(TValue newTarget, ref TValue currentTarget)
-    {
-        if (IsTargetChanged(newTarget, currentTarget))
-        {
-            currentTarget = newTarget;
-            isStale = true;
-        }
-    }
+    //protected void UpdateCurrentTarget<TValue>(TValue newTarget, ref TValue currentTarget)
+    //{
+    //    if (IsTargetChanged(newTarget, currentTarget))
+    //    {
+    //        currentTarget = newTarget;
+    //        isStale = true;
+    //    }
+    //}
 
-    protected bool IsTargetChanged<TValue>(TValue newTarget, TValue currentTarget)
-    {
-        // It's assumed that target has not changed iff previous target and new target are both null.
-        return currentTarget != null || newTarget != null;
-    }
+    //protected bool IsTargetChanged<TValue>(TValue newTarget, TValue currentTarget)
+    //{
+    //    // It's assumed that target has not changed iff previous target and new target are both null.
+    //    return currentTarget != null || newTarget != null;
+    //}
     public void DrawNow(HandLandmarkerResult target)
     {
         target.CloneTo(ref _currentTarget);
