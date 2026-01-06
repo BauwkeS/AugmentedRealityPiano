@@ -14,17 +14,9 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
 {
     [SerializeField] private PointListAnnotation _landmarkListAnnotation;
     [SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
-    [SerializeField] private Color _leftLandmarkColor = Color.green;
-    [SerializeField] private Color _rightLandmarkColor = Color.green;
-    [SerializeField] private Color _fingertipLandmarkColor = Color.red;
+    //[SerializeField] private Color _rightLandmarkColor = Color.green;
+    //[SerializeField] private Color _fingertipLandmarkColor = Color.red;
 
-
-
-    public enum Hand
-    {
-        Left,
-        Right,
-    }
 
     private const int _LandmarkCount = 21;
     private readonly List<(int, int)> _connections = new List<(int, int)> {
@@ -51,14 +43,14 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
       (19, 20),
     };
 
-    public void SetColorOfFingerTips()
+    public void SetColorOfFingerTips(Color fingertipColor)
     {
         if (_landmarkListAnnotation.count < 20) return;
-        _landmarkListAnnotation.SetColorOfOnePoint(_fingertipLandmarkColor, 4);
-        _landmarkListAnnotation.SetColorOfOnePoint(_fingertipLandmarkColor, 8);
-        _landmarkListAnnotation.SetColorOfOnePoint(_fingertipLandmarkColor, 12);
-        _landmarkListAnnotation.SetColorOfOnePoint(_fingertipLandmarkColor, 16);
-        _landmarkListAnnotation.SetColorOfOnePoint(_fingertipLandmarkColor, 20);
+        _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 4);
+        _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 8);
+        _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 12);
+        _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 16);
+        _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 20);
     }
 
     public List<Vector3> GetFingerTipPositions()
@@ -101,11 +93,11 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         _connectionListAnnotation.Fill(_connections, _landmarkListAnnotation);
     }
 
-    public void SetLandmarkColor(Color rightLandmarkColor)
-    {
-        _rightLandmarkColor = rightLandmarkColor;
-        _leftLandmarkColor = rightLandmarkColor;
-    }
+    //public void SetLandmarkColor(Color rightLandmarkColor)
+    //{
+    //    _rightLandmarkColor = rightLandmarkColor;
+    //    _leftLandmarkColor = rightLandmarkColor;
+    //}
 
 
     public void SetLandmarkRadius(float landmarkRadius)
@@ -123,11 +115,11 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         _connectionListAnnotation.SetLineWidth(connectionWidth);
     }
 
-    public void SetColorsHands()
+    public void SetColorsHands(Color landmarkColor, Color fingertipColor)
     {
         ///this is the one that actually works
-        _landmarkListAnnotation.SetColor(_rightLandmarkColor);
-        SetColorOfFingerTips();
+        _landmarkListAnnotation.SetColor(landmarkColor);
+        SetColorOfFingerTips(fingertipColor);
     }
 
 

@@ -75,9 +75,9 @@ public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsA
     {
         if (!UnityEditor.PrefabUtility.IsPartOfAnyPrefab(this))
         {
-            ApplyLandmarkColor(_handLandmarkColor);
+         //   ApplyLandmarkColor(_handLandmarkColor);
             ApplyLandmarkRadius(_landmarkRadius);
-            ApplyColorOfFingertips();
+            //ApplyColorOfFingertips();
             ApplyConnectionColor(_connectionColor);
             ApplyConnectionWidth(_connectionWidth);
         }
@@ -87,7 +87,7 @@ public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsA
     public void SetLandmarkColor(Color leftLandmarkColor)
     {
         _handLandmarkColor = leftLandmarkColor;
-        ApplyLandmarkColor(_handLandmarkColor);
+      //  ApplyLandmarkColor(_handLandmarkColor);
     }
 
     public void SetLandmarkRadius(float landmarkRadius)
@@ -111,7 +111,7 @@ public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsA
     {
         foreach (var hands in children)
         {
-            hands.SetColorsHands();
+            hands.SetColorsHands(_handLandmarkColor, _fingertipLandmarkColor);
         }
     }
 
@@ -140,28 +140,28 @@ public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsA
     protected override HandsAnnotation InstantiateChild(bool isActive = true)
     {
         var annotation = base.InstantiateChild(isActive);
-        annotation.SetLandmarkColor(_handLandmarkColor);
-        annotation.SetColorOfFingerTips();
+        //annotation.SetLandmarkColor(_handLandmarkColor);
+        //annotation.SetColorOfFingerTips();
         annotation.SetLandmarkRadius(_landmarkRadius);
         annotation.SetConnectionColor(_connectionColor);
         annotation.SetConnectionWidth(_connectionWidth);
         return annotation;
     }
-    private void ApplyColorOfFingertips()
-    {
-        foreach (var handLandmarkList in children)
-        {
-            if (handLandmarkList != null) { handLandmarkList.SetColorOfFingerTips(); }
-        }
-    }
+    //private void ApplyColorOfFingertips()
+    //{
+    //    foreach (var handLandmarkList in children)
+    //    {
+    //        if (handLandmarkList != null) { handLandmarkList.SetColorOfFingerTips(); }
+    //    }
+    //}
 
-    private void ApplyLandmarkColor(Color LandmarkColor)
-    {
-        foreach (var handLandmarkList in children)
-        {
-            if (handLandmarkList != null) { handLandmarkList.SetLandmarkColor(LandmarkColor); }
-        }
-    }
+    //private void ApplyLandmarkColor(Color LandmarkColor)
+    //{
+    //    foreach (var handLandmarkList in children)
+    //    {
+    //        if (handLandmarkList != null) { handLandmarkList.SetLandmarkColor(LandmarkColor); }
+    //    }
+    //}
 
     private void ApplyLandmarkRadius(float landmarkRadius)
     {
