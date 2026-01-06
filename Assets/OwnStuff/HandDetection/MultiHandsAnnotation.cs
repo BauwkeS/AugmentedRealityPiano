@@ -23,8 +23,6 @@ using System.Xml.Serialization;
 public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsAnnotation>
 {
     [SerializeField] private Color _handLandmarkColor = Color.blue;
-
-
     [SerializeField] private PointListAnnotation _landmarkListAnnotation;
     [SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
     [SerializeField] private Color _fingertipLandmarkColor = Color.red;

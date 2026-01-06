@@ -13,32 +13,8 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
     public sealed class HandsAnnotation : HierarchicalAnnotation
 {
     [SerializeField] private PointListAnnotation _landmarkListAnnotation;
-    [SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
 
     private const int _LandmarkCount = 21;
-    private readonly List<(int, int)> _connections = new List<(int, int)> {
-      (0, 1),
-      (1, 2),
-      (2, 3),
-      (3, 4),
-      (0, 5),
-      (5, 9),
-      (9, 13),
-      (13, 17),
-      (0, 17),
-      (5, 6),
-      (6, 7),
-      (7, 8),
-      (9, 10),
-      (10, 11),
-      (11, 12),
-      (13, 14),
-      (14, 15),
-      (15, 16),
-      (17, 18),
-      (18, 19),
-      (19, 20),
-    };
 
     public void SetColorOfFingerTips(Color fingertipColor)
     {
@@ -67,7 +43,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         set
         {
             _landmarkListAnnotation.isMirrored = value;
-            _connectionListAnnotation.isMirrored = value;
             base.isMirrored = value;
         }
     }
@@ -77,7 +52,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         set
         {
             _landmarkListAnnotation.rotationAngle = value;
-            _connectionListAnnotation.rotationAngle = value;
             base.rotationAngle = value;
         }
     }
@@ -87,13 +61,11 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
     private void Start()
     {
         _landmarkListAnnotation.Fill(_LandmarkCount);
-        _connectionListAnnotation.Fill(_connections, _landmarkListAnnotation);
     }
 
 
     public void SetColorsHands(Color landmarkColor, Color fingertipColor)
     {
-        ///this is the one that actually works
         _landmarkListAnnotation.SetColor(landmarkColor);
         SetColorOfFingerTips(fingertipColor);
     }
@@ -103,8 +75,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         if (ActivateFor(target))
         {
             _landmarkListAnnotation.Draw(target, visualizeZ);
-            // Draw explicitly because connection annotation's targets remain the same.
-            _connectionListAnnotation.Redraw();
         }
     }
 
