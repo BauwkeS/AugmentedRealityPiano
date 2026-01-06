@@ -14,9 +14,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
 {
     [SerializeField] private PointListAnnotation _landmarkListAnnotation;
     [SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
-    //[SerializeField] private Color _rightLandmarkColor = Color.green;
-    //[SerializeField] private Color _fingertipLandmarkColor = Color.red;
-
 
     private const int _LandmarkCount = 21;
     private readonly List<(int, int)> _connections = new List<(int, int)> {
@@ -93,27 +90,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         _connectionListAnnotation.Fill(_connections, _landmarkListAnnotation);
     }
 
-    //public void SetLandmarkColor(Color rightLandmarkColor)
-    //{
-    //    _rightLandmarkColor = rightLandmarkColor;
-    //    _leftLandmarkColor = rightLandmarkColor;
-    //}
-
-
-    //public void SetLandmarkRadius(float landmarkRadius)
-    //{
-    //    _landmarkListAnnotation.SetRadius(landmarkRadius);
-    //}
-
-    //public void SetConnectionColor(Color connectionColor)
-    //{
-    //    _connectionListAnnotation.SetColor(connectionColor);
-    //}
-
-    //public void SetConnectionWidth(float connectionWidth)
-    //{
-    //    _connectionListAnnotation.SetLineWidth(connectionWidth);
-    //}
 
     public void SetColorsHands(Color landmarkColor, Color fingertipColor)
     {
@@ -121,22 +97,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         _landmarkListAnnotation.SetColor(landmarkColor);
         SetColorOfFingerTips(fingertipColor);
     }
-
-
-    //public void Draw(IReadOnlyList<NormalizedLandmark> target, bool visualizeZ = false)
-    //{
-    //    if (ActivateFor(target))
-    //    {
-    //        _landmarkListAnnotation.Draw(target, visualizeZ);
-    //        // Draw explicitly because connection annotation's targets remain the same.
-    //        _connectionListAnnotation.Redraw();
-    //    }
-    //}
-
-    //public void Draw(NormalizedLandmarkList target, bool visualizeZ = false)
-    //{
-    //    Draw(target?.Landmark, visualizeZ);
-    //}
 
     public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> target, bool visualizeZ = false)
     {
