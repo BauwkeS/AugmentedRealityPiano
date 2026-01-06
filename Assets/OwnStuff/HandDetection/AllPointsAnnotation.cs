@@ -12,33 +12,14 @@ using Mediapipe;
 
 public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
 {
-    [SerializeField] private Color _color = Color.green;
     [SerializeField] private float _radius = 15.0f;
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (!UnityEditor.PrefabUtility.IsPartOfAnyPrefab(this))
-        {
-            ApplyColor(_color);
-            ApplyRadius(_radius);
-        }
-    }
-#endif
 
     public void SetColor(Color color)
     {
-        _color = color;
-        ApplyColor(_color);
-    }
-    public IReadOnlyList<Vector3> GetTargets()
-    {
-        List<Vector3> targets = new List<Vector3>();
-        foreach (var annotation in children)
+        foreach (var point in children)
         {
-            targets.Add(annotation.transform.localPosition);
+            if (point != null) { point. SetColor(color); }
         }
-        return targets;
     }
 
     public Vector3 GetPointPosition(int pointIndex)
@@ -48,72 +29,6 @@ public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
     public void SetColorOfOnePoint(Color color, int pointIndex)
     {
         children[pointIndex].SetColor(color);
-    }
-
-    public void SetRadius(float radius)
-    {
-        _radius = radius;
-        ApplyRadius(_radius);
-    }
-
-    public void Draw(IReadOnlyList<Vector3> targets)
-    {
-        if (ActivateFor(targets))
-        {
-            CallActionForAll(targets, (annotation, target) =>
-            {
-                if (annotation != null) { annotation.Draw(target); }
-            });
-        }
-    }
-
-    public void Draw(IReadOnlyList<Landmark> targets, Vector3 scale, bool visualizeZ = true)
-    {
-        if (ActivateFor(targets))
-        {
-            CallActionForAll(targets, (annotation, target) =>
-            {
-                if (annotation != null) { annotation.Draw(target, scale, visualizeZ); }
-            });
-        }
-    }
-
-    //public IReadOnlyList<Landmark> GetLandMarks()
-    //{
-    //    List<Landmark> landmarks = new List<Landmark>();
-    //    foreach (var annotation in children)
-    //    {
-    //        landmarks.Add(new Landmark()
-    //        {
-    //            X = annotation.transform.localPosition.x,
-    //            Y = annotation.transform.localPosition.y,
-    //            Z = annotation.transform.localPosition.z
-    //        });
-    //    }
-    //    return landmarks;
-    //}
-
-
-
-    public void Draw(LandmarkList targets, Vector3 scale, bool visualizeZ = true)
-    {
-        Draw(targets.Landmark, scale, visualizeZ);
-    }
-
-    public void Draw(IReadOnlyList<NormalizedLandmark> targets, bool visualizeZ = true)
-    {
-        if (ActivateFor(targets))
-        {
-            CallActionForAll(targets, (annotation, target) =>
-            {
-                if (annotation != null) { annotation.Draw(target, visualizeZ); }
-            });
-        }
-    }
-
-    public void Draw(NormalizedLandmarkList targets, bool visualizeZ = true)
-    {
-        Draw(targets.Landmark, visualizeZ);
     }
 
     public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> targets, bool visualizeZ = true)
@@ -127,51 +42,10 @@ public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
         }
     }
 
-    public void Draw(mptcc.NormalizedLandmarks targets, bool visualizeZ = true) => Draw(targets.landmarks, visualizeZ);
-
-    public void Draw(IReadOnlyList<mplt.RelativeKeypoint> targets, float threshold = 0.0f)
-    {
-        if (ActivateFor(targets))
-        {
-            CallActionForAll(targets, (annotation, target) =>
-            {
-                if (annotation != null) { annotation.Draw(target, threshold); }
-            });
-        }
-    }
-
-    public void Draw(IReadOnlyList<mptcc.NormalizedKeypoint> targets, float threshold = 0.0f)
-    {
-        if (ActivateFor(targets))
-        {
-            CallActionForAll(targets, (annotation, target) =>
-            {
-                if (annotation != null) { annotation.Draw(target, threshold); }
-            });
-        }
-    }
-
     protected override OnePointAnnotation InstantiateChild(bool isActive = true)
     {
         var annotation = base.InstantiateChild(isActive);
-        annotation.SetColor(_color);
         annotation.SetRadius(_radius);
         return annotation;
-    }
-
-    private void ApplyColor(Color color)
-    {
-        foreach (var point in children)
-        {
-            if (point != null) { point.SetColor(color); }
-        }
-    }
-
-    private void ApplyRadius(float radius)
-    {
-        foreach (var point in children)
-        {
-            if (point != null) { point.SetRadius(radius); }
-        }
     }
 }

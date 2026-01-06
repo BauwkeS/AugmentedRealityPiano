@@ -23,9 +23,9 @@ using System.Xml.Serialization;
 public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 //public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 {
-    [SerializeField] private GameObject _annotationPrefab;
+    //[SerializeField] private GameObject _annotationPrefab;
 
-    private List<HandsAnnotation> _children;
+    [SerializeField] private List<HandsAnnotation> _children;
     private List<HandsAnnotation> children
     {
         get
@@ -62,12 +62,12 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
             });
         }
     }
-    private HandsAnnotation InstantiateChild(bool isActive = true)
-    {
-        var annotation = InstantiateChild<HandsAnnotation>(_annotationPrefab);
-        annotation.SetActive(isActive);
-        return annotation;
-    }
+    //private HandsAnnotation InstantiateChild()
+    //{
+    //    var annotation = InstantiateChild<HandsAnnotation>(_annotationPrefab);
+    //    annotation.SetActive(true);
+    //    return annotation;
+    //}
 
     private void CallActionForAll<TArg>(IReadOnlyList<TArg> argumentList, Action<HandsAnnotation, TArg> action)
     {
@@ -81,16 +81,16 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
             }
 
             // reset annotations
-            if (i >= children.Count)
-            {
-                // children.Count < argumentList.Count
-                children.Add(InstantiateChild());
-            }
-            else if (children[i] == null)
-            {
-                // child is not initialized yet
-                children[i] = InstantiateChild();
-            }
+            //if (i >= children.Count)
+            //{
+            //    // children.Count < argumentList.Count
+            //    children.Add(InstantiateChild());
+            //}
+            //else if (children[i] == null)
+            //{
+            //    // child is not initialized yet
+            //    children[i] = InstantiateChild();
+            //}
             action(children[i], argumentList[i]);
         }
     }
