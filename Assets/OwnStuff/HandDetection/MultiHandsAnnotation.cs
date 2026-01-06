@@ -62,12 +62,6 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
             });
         }
     }
-
-    //protected override HandsAnnotation InstantiateChild(bool isActive = true)
-    //{
-    //    var annotation = base.InstantiateChild(isActive);
-    //    return annotation;
-    //}
     private HandsAnnotation InstantiateChild(bool isActive = true)
     {
         var annotation = InstantiateChild<HandsAnnotation>(_annotationPrefab);
