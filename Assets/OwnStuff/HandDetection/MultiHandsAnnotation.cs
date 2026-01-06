@@ -20,11 +20,28 @@ using System.Xml.Serialization;
 
 
 
-public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsAnnotation>
+public sealed class MultiHandsAnnotation : HierarchicalAnnotation
+//public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 {
+    [SerializeField] private GameObject _annotationPrefab;
+
+    private List<HandsAnnotation> _children;
+    private List<HandsAnnotation> children
+    {
+        get
+        {
+            if (_children == null)
+            {
+                _children = new List<HandsAnnotation>();
+            }
+            return _children;
+        }
+    }
+
+
     [SerializeField] private Color _handLandmarkColor = Color.blue;
-    [SerializeField] private PointListAnnotation _landmarkListAnnotation;
-    [SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
+    //[SerializeField] private PointListAnnotation _landmarkListAnnotation;
+    //[SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
     [SerializeField] private Color _fingertipLandmarkColor = Color.red;
 
     public void SetThoseColors()
@@ -46,12 +63,43 @@ public sealed class MultiHandsAnnotation : Mediapipe.Unity.ListAnnotation<HandsA
         }
     }
 
-    protected override HandsAnnotation InstantiateChild(bool isActive = true)
+    //protected override HandsAnnotation InstantiateChild(bool isActive = true)
+    //{
+    //    var annotation = base.InstantiateChild(isActive);
+    //    return annotation;
+    //}
+    private HandsAnnotation InstantiateChild(bool isActive = true)
     {
-        var annotation = base.InstantiateChild(isActive);
+        var annotation = InstantiateChild<HandsAnnotation>(_annotationPrefab);
+        annotation.SetActive(isActive);
         return annotation;
     }
-   
+
+    private void CallActionForAll<TArg>(IReadOnlyList<TArg> argumentList, Action<HandsAnnotation, TArg> action)
+    {
+        for (var i = 0; i < Mathf.Max(children.Count, argumentList.Count); i++)
+        {
+            if (i >= argumentList.Count)
+            {
+                // children.Count > argumentList.Count
+                action(children[i], default);
+                continue;
+            }
+
+            // reset annotations
+            if (i >= children.Count)
+            {
+                // children.Count < argumentList.Count
+                children.Add(InstantiateChild());
+            }
+            else if (children[i] == null)
+            {
+                // child is not initialized yet
+                children[i] = InstantiateChild();
+            }
+            action(children[i], argumentList[i]);
+        }
+    }
 }
 
 
