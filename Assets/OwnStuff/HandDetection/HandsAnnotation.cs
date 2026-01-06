@@ -101,25 +101,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         _connectionListAnnotation.Fill(_connections, _landmarkListAnnotation);
     }
 
-    //private void Update()
-    //{
-    //    List<Vector3> points = GetFingerTipPositions();
-    //    Debug.Log("fingertip Points:");
-    //    foreach (var point in points)
-    //    {
-    //        Debug.Log(point);
-    //    }
-    //}
-
-    //public void SetLeftLandmarkColor(Color leftLandmarkColor)
-    //{
-    //    _leftLandmarkColor = leftLandmarkColor;
-    //}
-
-    //public void SetRightLandmarkColor(Color rightLandmarkColor)
-    //{
-    //    _rightLandmarkColor = rightLandmarkColor;
-    //}
     public void SetLandmarkColor(Color rightLandmarkColor)
     {
         _rightLandmarkColor = rightLandmarkColor;
@@ -142,42 +123,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         _connectionListAnnotation.SetLineWidth(connectionWidth);
     }
 
-    //public void SetHandedness(Hand handedness)
-    //{
-    //    //if (handedness == Hand.Left)
-    //    //{
-    //    //    _landmarkListAnnotation.SetColor(_leftLandmarkColor);
-    //    //}
-    //    //else if (handedness == Hand.Right)
-    //    //{
-    //    //}
-    //    //this is the one that actually works
-    //        _landmarkListAnnotation.SetColor(_rightLandmarkColor);
-    //    SetColorOfFingerTips();
-    //}
-
-    //public void SetHandedness(IReadOnlyList<Classification> handedness)
-    //{
-    //    if (handedness == null || handedness.Count == 0 || handedness[0].Label == "Left")
-    //    {
-    //        SetHandedness(Hand.Left);
-    //    }
-    //    else if (handedness[0].Label == "Right")
-    //    {
-    //        SetHandedness(Hand.Right);
-    //    }
-    //    // ignore unknown label
-    //    /
-    //    /
-
-
-    //}
-
-    //public void SetHandedness(ClassificationList handedness)
-    //{
-    //    //SetHandedness(handedness.Classification);
-    //}
-
     public void SetColorsHands()
     {
         ///this is the one that actually works
@@ -185,23 +130,6 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
         SetColorOfFingerTips();
     }
 
-    //public void SetHandedness(IReadOnlyList<mptcc.Category> handedness)
-    //{
-    //    if (handedness == null || handedness.Count == 0 || handedness[0].categoryName == "Left")
-    //    {
-    //        SetHandedness(Hand.Left);
-    //    }
-    //    else if (handedness[0].categoryName == "Right")
-    //    {
-    //        SetHandedness(Hand.Right);
-    //    }
-    //    // ignore unknown label
-    //}
-
-    //public void SetHandedness(mptcc.Classifications handedness)
-    //{
-    //    SetHandedness(handedness.categories);
-    //}
 
     public void Draw(IReadOnlyList<NormalizedLandmark> target, bool visualizeZ = false)
     {
