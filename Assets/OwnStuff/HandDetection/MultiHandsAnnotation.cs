@@ -25,7 +25,9 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 {
     //[SerializeField] private GameObject _annotationPrefab;
 
-    [SerializeField] private List<HandsAnnotation> _children;
+    [SerializeField] private GameObject _handsAnnotationPrefab;
+
+    private List<HandsAnnotation> _children;
     private List<HandsAnnotation> children
     {
         get
@@ -38,11 +40,27 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
         }
     }
 
+    
 
     [SerializeField] private Color _handLandmarkColor = Color.blue;
     //[SerializeField] private PointListAnnotation _landmarkListAnnotation;
     //[SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
     [SerializeField] private Color _fingertipLandmarkColor = Color.red;
+
+
+    private void Start()
+    {
+        //2 for 2 hands
+        Instantiate(_handsAnnotationPrefab, transform);
+        Instantiate(_handsAnnotationPrefab, transform);
+        _children = new List<HandsAnnotation>();
+        _children.AddRange(GetComponentsInChildren<HandsAnnotation>());
+    }
+
+    private void OnEnable()
+    {
+        SetThoseColors();
+    }
 
     public void SetThoseColors()
     {

@@ -11,43 +11,43 @@ using Mediapipe;
 using System;
 #pragma warning restore IDE0065
 
-//public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
-//{
+public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
+{
 
-//    public void SetColor(Color color)
-//    {
-//        foreach (var point in children)
-//        {
-//            if (point != null) { point. SetColor(color); }
-//        }
-//    }
+    public void SetColor(Color color)
+    {
+        foreach (var point in children)
+        {
+            if (point != null) { point.SetColor(color); }
+        }
+    }
 
-//    public Vector3 GetPointPosition(int pointIndex)
-//    {
-//        return children[pointIndex].transform.localPosition;
-//    }
-//    public void SetColorOfOnePoint(Color color, int pointIndex)
-//    {
-//        children[pointIndex].SetColor(color);
-//    }
+    public Vector3 GetPointPosition(int pointIndex)
+    {
+        return children[pointIndex].transform.localPosition;
+    }
+    public void SetColorOfOnePoint(Color color, int pointIndex)
+    {
+        children[pointIndex].SetColor(color);
+    }
 
-//    public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> targets, bool visualizeZ = true)
-//    {
-//        if (ActivateFor(targets))
-//        {
-//            CallActionForAll(targets, (annotation, target) =>
-//            {
-//                if (annotation != null) { annotation.Draw(in target, visualizeZ); }
-//            });
-//        }
-//    }
+    public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> targets, bool visualizeZ = true)
+    {
+        if (ActivateFor(targets))
+        {
+            CallActionForAll(targets, (annotation, target) =>
+            {
+                if (annotation != null) { annotation.Draw(in target, visualizeZ); }
+            });
+        }
+    }
 
-//    protected override OnePointAnnotation InstantiateChild(bool isActive = true)
-//    {
-//        var annotation = base.InstantiateChild(isActive);
-//        return annotation;
-//    }
-//}
+    protected override OnePointAnnotation InstantiateChild(bool isActive = true)
+    {
+        var annotation = base.InstantiateChild(isActive);
+        return annotation;
+    }
+}
 
 
 //public class AllPointsAnnotation : HierarchicalAnnotation
