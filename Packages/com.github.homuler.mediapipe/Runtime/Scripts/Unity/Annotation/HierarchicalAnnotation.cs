@@ -74,7 +74,18 @@ namespace Mediapipe.Unity
       return true;
     }
 
-    public virtual bool isMirrored { get; set; }
+        protected bool ActivateForFingerLandMark<HierarchicalAnnotation>(HierarchicalAnnotation target)
+        {
+            if (target == null || !isActive)
+            {
+                SetActive(false);
+                return false;
+            }
+            //SetActive(true);
+            return true;
+        }
+
+        public virtual bool isMirrored { get; set; }
     public virtual RotationAngle rotationAngle { get; set; } = RotationAngle.Rotation0;
 
     protected TAnnotation InstantiateChild<TAnnotation>(GameObject prefab) where TAnnotation : HierarchicalAnnotation

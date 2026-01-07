@@ -31,9 +31,9 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
         Debug.Log($"Image Read Mode = {config.ImageReadMode}");
         Debug.Log($"Running Mode = {config.RunningMode}");
         Debug.Log($"NumHands = {config.NumHands}");
-        Debug.Log($"MinHandDetectionConfidence = {config.MinHandDetectionConfidence}");
-        Debug.Log($"MinHandPresenceConfidence = {config.MinHandPresenceConfidence}");
-        Debug.Log($"MinTrackingConfidence = {config.MinTrackingConfidence}");
+       // Debug.Log($"MinHandDetectionConfidence = {config.MinHandDetectionConfidence}");
+        //Debug.Log($"MinHandPresenceConfidence = {config.MinHandPresenceConfidence}");
+        //Debug.Log($"MinTrackingConfidence = {config.MinTrackingConfidence}");
 
         yield return Mediapipe.Unity.Sample.AssetLoader.PrepareAssetAsync(config.ModelPath);
 

@@ -42,10 +42,10 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 
     
 
-    [SerializeField] private Color _handLandmarkColor = Color.blue;
+    [SerializeField] private Color _handLandmarkColor = Color.red;
     //[SerializeField] private PointListAnnotation _landmarkListAnnotation;
     //[SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
-    [SerializeField] private Color _fingertipLandmarkColor = Color.red;
+    [SerializeField] private Color _fingertipLandmarkColor = Color.blue;
 
 
     private void Start()

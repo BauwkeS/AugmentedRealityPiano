@@ -17,7 +17,7 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
 {
     [SerializeField] private GameObject _pointAllAnnotationPrefab;
     private AllPointsAnnotation _landmarkListAnnotation;
-
+      
     private const int _LandmarkCount = 21;
 
     public void SetColorOfFingerTips(Color fingertipColor)
@@ -30,17 +30,17 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
         _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 20);
     }
 
-    public List<Vector3> GetFingerTipPositions()
-    {
-        List<Vector3> fingertipPositions = new List<Vector3>();
-        if (_landmarkListAnnotation.count < 20) return fingertipPositions;
-        fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(4));
-        fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(8));
-        fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(12));
-        fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(16));
-        fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(20));
-        return fingertipPositions;
-    }
+    //public List<Vector3> GetFingerTipPositions()
+    //{
+    //    List<Vector3> fingertipPositions = new List<Vector3>();
+    //    if (_landmarkListAnnotation.count < 20) return fingertipPositions;
+    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(4));
+    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(8));
+    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(12));
+    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(16));
+    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(20));
+    //    return fingertipPositions;
+    //}
 
     public override bool isMirrored
     {
@@ -67,6 +67,7 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
 
         _landmarkListAnnotation = GetComponentInChildren<AllPointsAnnotation>();
         _landmarkListAnnotation.Fill(_LandmarkCount);
+        OnlyActivateFingertips();
     }
 
 
@@ -87,6 +88,22 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
     public void Draw(mptcc.NormalizedLandmarks target, bool visualizeZ = false)
     {
         Draw(target.landmarks, visualizeZ);
+    }
+
+    private void OnlyActivateFingertips()
+    {
+        for (int i = 0; i < _landmarkListAnnotation.count; i++)
+        {
+            if (i == 4 || i == 8 || i == 12 || i == 16 || i == 20)
+            {
+                _landmarkListAnnotation[i].SetActive(true);
+            }
+            else
+            {
+                _landmarkListAnnotation[i].SetActive(false);
+
+            }
+        }
     }
 }
 

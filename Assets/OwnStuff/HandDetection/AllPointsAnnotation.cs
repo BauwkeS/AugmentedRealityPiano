@@ -33,7 +33,7 @@ public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
 
     public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> targets, bool visualizeZ = true)
     {
-        if (ActivateFor(targets))
+        if (ActivateForFingerLandMark(targets))
         {
             CallActionForAll(targets, (annotation, target) =>
             {

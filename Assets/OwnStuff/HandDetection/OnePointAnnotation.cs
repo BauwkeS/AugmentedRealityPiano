@@ -14,7 +14,7 @@ public class OnePointAnnotation : HierarchicalAnnotation
   {
     private void OnEnable()
     {
-        transform.localScale = 15.0f * Vector3.one; //15.0f is the radius of the dot
+        transform.localScale = 25.0f * Vector3.one; //15.0f is the radius of the dot
     }
 
     private void OnDisable()
@@ -29,7 +29,7 @@ public class OnePointAnnotation : HierarchicalAnnotation
 
     public void Draw(in mptcc.NormalizedLandmark target, bool visualizeZ = true)
     {
-      if (ActivateFor(target))
+      if (ActivateForFingerLandMark(target))
       {
         var position = GetScreenRect().GetPoint(in target, rotationAngle, isMirrored);
         if (!visualizeZ)
