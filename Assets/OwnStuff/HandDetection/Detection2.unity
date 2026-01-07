@@ -378,8 +378,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandsAnnotation (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7575746119831127839, guid: 0356189a1e0d6f140bcbf6fd8cced3ca,
+        type: 3}
+      propertyPath: _annotationPrefabOnePoint
+      value: 
+      objectReference: {fileID: 5105739270100195971, guid: c59c5dd6f4349e94bbe5911d6f00e788,
+        type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1149007116997388094, guid: 0356189a1e0d6f140bcbf6fd8cced3ca, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0356189a1e0d6f140bcbf6fd8cced3ca, type: 3}
@@ -682,8 +689,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandsAnnotation
       objectReference: {fileID: 0}
+    - target: {fileID: 7575746119831127839, guid: 0356189a1e0d6f140bcbf6fd8cced3ca,
+        type: 3}
+      propertyPath: _annotationPrefabOnePoint
+      value: 
+      objectReference: {fileID: 5105739270100195971, guid: c59c5dd6f4349e94bbe5911d6f00e788,
+        type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1149007116997388094, guid: 0356189a1e0d6f140bcbf6fd8cced3ca, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0356189a1e0d6f140bcbf6fd8cced3ca, type: 3}

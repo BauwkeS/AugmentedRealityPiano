@@ -117,5 +117,7 @@ public class OnePointAnnotation : HierarchicalAnnotation
       var h = Mathf.Lerp(90, 0, t) / 360; // from yellow-green to red
       return Color.HSVToRGB(h, 1, 1);
     }
+
+
   }
 
