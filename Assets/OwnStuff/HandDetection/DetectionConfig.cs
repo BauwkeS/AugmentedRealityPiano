@@ -12,7 +12,7 @@ using Mediapipe.Tasks.Vision.HandLandmarker;
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
       Mediapipe.Tasks.Core.BaseOptions.Delegate.CPU;
 #else
-    Tasks.Core.BaseOptions.Delegate.GPU;
+    Mediapipe.Tasks.Core.BaseOptions.Delegate.GPU;
 #endif
 
     public Mediapipe.Unity.ImageReadMode ImageReadMode { get; set; } = Mediapipe.Unity.ImageReadMode.CPUAsync;
