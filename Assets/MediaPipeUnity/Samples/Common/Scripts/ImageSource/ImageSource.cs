@@ -164,7 +164,7 @@ namespace Mediapipe.Unity
             var shouldFlipHorizontally = (isFrontFacing || expectedToBeMirrored) ^ isHorizontallyFlipped;
       var shouldFlipVertically = isVerticallyFlipped;
             //automatically make it horizontal and never flip because its a phone and you want it horizontal like that
-      return Experimental.ImageTransformationOptions.Build(false, shouldFlipVertically, rotation);
+      return Experimental.ImageTransformationOptions.Build(shouldFlipHorizontally, shouldFlipVertically, rotation);
     }
   }
 }

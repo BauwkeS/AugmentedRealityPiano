@@ -232,6 +232,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AnnotationScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 3957716320753539844, guid: 67b7546083de30449ba650438ac2a799,
+        type: 3}
+      propertyPath: _fitMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -913,6 +918,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8571076843139220523, guid: 140d1d2c406167c50819d89f86d9092e,
+        type: 3}
+      propertyPath: _contents
+      value: 
+      objectReference: {fileID: 6938625115693525800, guid: ccb566bf41c40c743b968956eea13210,
+        type: 3}
     - target: {fileID: 8571076843237194833, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: _baseRunner
