@@ -634,7 +634,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rawImageRect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 335552405}
     - target: {fileID: 3106069619309092597, guid: 54f580d6a6348474296b578c5a3244b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -792,6 +792,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571076842338426121, guid: 140d1d2c406167c50819d89f86d9092e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8571076842338426122, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}

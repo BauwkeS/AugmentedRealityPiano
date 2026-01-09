@@ -17,7 +17,21 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
 {
     [SerializeField] private GameObject _pointAllAnnotationPrefab;
     private AllPointsAnnotation _landmarkListAnnotation;
-      
+    public List<Vector3> FingertipPositions
+    {
+        get
+        {
+            List<Vector3> fingertipPositions = new List<Vector3>();
+            if (_landmarkListAnnotation.count < 20) return fingertipPositions;
+            fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(4));
+            fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(8));
+            fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(12));
+            fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(16));
+            fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(20));
+            return fingertipPositions;
+        }
+    }
+
     private const int _LandmarkCount = 21;
 
     public void SetColorOfFingerTips(Color fingertipColor)
@@ -29,18 +43,6 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
         _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 16);
         _landmarkListAnnotation.SetColorOfOnePoint(fingertipColor, 20);
     }
-
-    //public List<Vector3> GetFingerTipPositions()
-    //{
-    //    List<Vector3> fingertipPositions = new List<Vector3>();
-    //    if (_landmarkListAnnotation.count < 20) return fingertipPositions;
-    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(4));
-    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(8));
-    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(12));
-    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(16));
-    //    fingertipPositions.Add(_landmarkListAnnotation.GetPointPosition(20));
-    //    return fingertipPositions;
-    //}
 
     public override bool isMirrored
     {

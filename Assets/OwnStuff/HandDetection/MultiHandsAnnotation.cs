@@ -40,7 +40,20 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
         }
     }
 
-    
+    public List<Vector3> FingerTipPositions
+    {
+        get
+        {
+            var result = new List<Vector3>();
+            foreach (var hands in children)
+            {
+                result.AddRange(hands.FingertipPositions);
+            }
+            return result;
+        }
+    }
+
+
 
     [SerializeField] private Color _handLandmarkColor = Color.red;
     //[SerializeField] private PointListAnnotation _landmarkListAnnotation;

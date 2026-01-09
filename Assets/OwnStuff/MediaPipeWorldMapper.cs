@@ -99,12 +99,12 @@ public class SpawnUIOnRawImage : MonoBehaviour
     public RectTransform canvasRect;        // Root canvas RectTransform (or the Canvas' RectTransform)
     public RectTransform uiPrefab;          // prefab must be a RectTransform (UI element)
 
-    public MultiHandLandmarkListAnnotation MultiHands;
+    public MultiHandsAnnotation MultiHands;
    // private List<Vector3> _fingertips;
 
     private void Start()
     {
-        MultiHands = FindAnyObjectByType<MultiHandLandmarkListAnnotation>();
+        MultiHands = FindAnyObjectByType<MultiHandsAnnotation>();
         //_fingertips = MultiHands.FingerTipPositions;
     }
 
