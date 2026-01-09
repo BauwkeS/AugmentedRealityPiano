@@ -5,7 +5,7 @@ using System.Collections;
 
 public abstract class TaskApiRunner<TTask> : BaseRunner where TTask : Mediapipe.Tasks.Vision.Core.BaseVisionTaskApi
 {
-    [SerializeField] protected Mediapipe.Unity.Screen screen;
+    [SerializeField] protected ScreenMain screen;
 
     private Coroutine _coroutine;
     protected TTask taskApi;
