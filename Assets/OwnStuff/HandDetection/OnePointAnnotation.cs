@@ -39,5 +39,18 @@ public class OnePointAnnotation : HierarchicalAnnotation
         transform.localPosition = position;
       }
     }
+    
+    public void DrawWorldHand(in mptcc.Landmark target, bool visualizeZ = true)
+    {
+      if (ActivateForFingerLandMark(target))
+      {
+        var position = GetScreenRect().GetPoint(target, Vector3.one ,rotationAngle, isMirrored);
+        //if (!visualizeZ)
+        //{
+        //  position.z = 0.0f;
+        //}
+        transform.position = position;
+      }
+    }
   }
 

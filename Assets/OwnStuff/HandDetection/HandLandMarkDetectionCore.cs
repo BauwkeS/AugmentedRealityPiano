@@ -37,7 +37,7 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 
         yield return Mediapipe.Unity.Sample.AssetLoader.PrepareAssetAsync(config.ModelPath);
 
-        var options = config.GetHandLandmarkerOptions(config.RunningMode == Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM ? OnHandLandmarkDetectionOutput : null);
+        var options = config.GetHandLandmarkerOptions(OnHandLandmarkDetectionOutput);
         taskApi = HandLandmarker.CreateFromOptions(options, Mediapipe.Unity.GpuManager.GpuResources);
         var imageSource = Mediapipe.Unity.Sample.ImageSourceProvider.ImageSource;
 
@@ -69,8 +69,8 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
         var result = HandLandmarkerResult.Alloc(options.numHands);
 
         // NOTE: we can share the GL context of the render thread with MediaPipe (for now, only on Android)
-        var canUseGpuImage = SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES3 && Mediapipe.Unity.GpuManager.GpuResources != null;
-        using var glContext = canUseGpuImage ? Mediapipe.Unity.GpuManager.GetGlContext() : null;
+        //var canUseGpuImage = SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES3 && Mediapipe.Unity.GpuManager.GpuResources != null;
+        //using var glContext = canUseGpuImage ? Mediapipe.Unity.GpuManager.GetGlContext() : null;
 
         while (true)
         {
@@ -87,66 +87,82 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 
             // Build the input Image
             Mediapipe.Image image;
-            switch (config.ImageReadMode)
-            {
-                case Mediapipe.Unity.ImageReadMode.GPU:
-                    if (!canUseGpuImage)
-                    {
-                        throw new System.Exception("ImageReadMode.GPU is not supported");
-                    }
-                    textureFrame.ReadTextureOnGPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-                    image = textureFrame.BuildGPUImage(glContext);
-                    // TODO: Currently we wait here for one frame to make sure the texture is fully copied to the TextureFrame before sending it to MediaPipe.
-                    // This usually works but is not guaranteed. Find a proper way to do this. See: https://github.com/homuler/MediaPipeUnityPlugin/pull/1311
-                    yield return waitForEndOfFrame;
-                    break;
-                case Mediapipe.Unity.ImageReadMode.CPU:
-                    yield return waitForEndOfFrame;
-                    textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-                    image = textureFrame.BuildCPUImage();
-                    textureFrame.Release();
-                    break;
-                case Mediapipe.Unity.ImageReadMode.CPUAsync:
-                default:
-                    req = textureFrame.ReadTextureAsync(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-                    yield return waitUntilReqDone;
+            //switch (config.ImageReadMode)
+            //{
+            //    case Mediapipe.Unity.ImageReadMode.GPU:
+            //        if (!canUseGpuImage)
+            //        {
+            //            throw new System.Exception("ImageReadMode.GPU is not supported");
+            //        }
+            //        textureFrame.ReadTextureOnGPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            //        image = textureFrame.BuildGPUImage(glContext);
+            //        // TODO: Currently we wait here for one frame to make sure the texture is fully copied to the TextureFrame before sending it to MediaPipe.
+            //        // This usually works but is not guaranteed. Find a proper way to do this. See: https://github.com/homuler/MediaPipeUnityPlugin/pull/1311
+            //        yield return waitForEndOfFrame;
+            //        break;
+            //    case Mediapipe.Unity.ImageReadMode.CPU:
+            //        yield return waitForEndOfFrame;
+            //        textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            //        image = textureFrame.BuildCPUImage();
+            //        textureFrame.Release();
+            //        break;
+            //    case Mediapipe.Unity.ImageReadMode.CPUAsync:
+            //    default:
+            //        req = textureFrame.ReadTextureAsync(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            //        yield return waitUntilReqDone;
 
-                    if (req.hasError)
-                    {
-                        Debug.LogWarning($"Failed to read texture from the image source");
-                        continue;
-                    }
-                    image = textureFrame.BuildCPUImage();
-                    textureFrame.Release();
-                    break;
+            //        if (req.hasError)
+            //        {
+            //            Debug.LogWarning($"Failed to read texture from the image source");
+            //            continue;
+            //        }
+            //        image = textureFrame.BuildCPUImage();
+            //        textureFrame.Release();
+            //        break;
+            //}
+
+            if (imageSource.GetCurrentTexture().updateCount == 0)
+            {
+                // No new frame
+                textureFrame.Release();
+                yield return new WaitForEndOfFrame();
+                continue;
             }
 
-            switch (taskApi.runningMode)
-            {
-                case Mediapipe.Tasks.Vision.Core.RunningMode.IMAGE:
-                    if (taskApi.TryDetect(image, imageProcessingOptions, ref result))
-                    {
-                        _handLandmarkerResultAnnotationController.DrawNow(result);
-                    }
-                    else
-                    {
-                        _handLandmarkerResultAnnotationController.DrawNow(default);
-                    }
-                    break;
-                case Mediapipe.Tasks.Vision.Core.RunningMode.VIDEO:
-                    if (taskApi.TryDetectForVideo(image, GetCurrentTimestampMillisec(), imageProcessingOptions, ref result))
-                    {
-                        _handLandmarkerResultAnnotationController.DrawNow(result);
-                    }
-                    else
-                    {
-                        _handLandmarkerResultAnnotationController.DrawNow(default);
-                    }
-                    break;
-                case Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM:
-                    taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
-                    break;
-            }
+            textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            image = textureFrame.BuildCPUImage();
+            textureFrame.Release();
+            yield return waitForEndOfFrame;
+
+            taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
+
+
+            //switch (taskApi.runningMode)
+            //{
+            //    case Mediapipe.Tasks.Vision.Core.RunningMode.IMAGE:
+            //        if (taskApi.TryDetect(image, imageProcessingOptions, ref result))
+            //        {
+            //            _handLandmarkerResultAnnotationController.DrawNow(result);
+            //        }
+            //        else
+            //        {
+            //            _handLandmarkerResultAnnotationController.DrawNow(default);
+            //        }
+            //        break;
+            //    case Mediapipe.Tasks.Vision.Core.RunningMode.VIDEO:
+            //        if (taskApi.TryDetectForVideo(image, GetCurrentTimestampMillisec(), imageProcessingOptions, ref result))
+            //        {
+            //            _handLandmarkerResultAnnotationController.DrawNow(result);
+            //        }
+            //        else
+            //        {
+            //            _handLandmarkerResultAnnotationController.DrawNow(default);
+            //        }
+            //        break;
+            //    case Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM:
+            //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
+            //        break;
+            //}
         }
     }
 

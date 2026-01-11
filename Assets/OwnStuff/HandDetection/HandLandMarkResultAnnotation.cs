@@ -2,14 +2,18 @@ using UnityEngine;
 
 using Mediapipe.Tasks.Vision.HandLandmarker;
 using Mediapipe.Unity;
+using Mediapipe.Tasks.Components.Containers;
 
 public class HandLandMarkResultAnnotation : MonoBehaviour
 {
     [SerializeField] protected MultiHandsAnnotation annotation;
+    [SerializeField] protected MultiHandsAnnotation annotationForWorld;
 
     protected bool isStale = false;
 
     [SerializeField] private bool _visualizeZ = false;
+    public GameObject uiPrefab;      
+
 
     private readonly object _currentTargetLock = new object();
     private HandLandmarkerResult _currentTarget;
@@ -70,6 +74,11 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
             Destroy(annotation);
             annotation = null;
         }
+        if (annotationForWorld != null)
+        {
+            Destroy(annotationForWorld);
+            annotationForWorld = null;
+        }
         isStale = false;
     }
 
@@ -79,8 +88,54 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
         {
             isStale = false;
             annotation.SetThoseColors();
+            annotationForWorld.SetThoseColors();
             annotation.Draw(_currentTarget.handLandmarks, _visualizeZ);
+            annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ);
+
+
         }
+    }
+    //private void Update()
+    //{
+    //    // For testing: spawn object at center of screen on space key press
+    //    if (Input.GetKeyDown(KeyCode.P))
+    //    {
+    //        foreach (var worldN in _currentTarget.handWorldLandmarks)
+    //        {
+    //            foreach (var point in worldN.landmarks)
+    //            {
+    //                if(point.)
+    //                SpawnHandsWorld(point);
+    //            }
+    //        }
+    //    }
+
+    //    //Debug.Log("Fingertips found: " + MultiHands.FingerTipPositions.Count);
+
+    //}
+
+    public void SpawnHandsWorld(Landmark pos)
+    {
+       // RectTransform canvasRect = GetComponent<RectTransform>();
+        // Instantiate as child of the canvas (keeps UI layering)
+        // Position relative to rawImageRect (use TransformPoint -> inverse of canvas space)
+
+        Vector3 landmarkPos = new Vector3(
+            (float)pos.x,
+            (float)pos.y,
+            (float)pos.z
+        );
+
+        Debug.Log("Landmark: " + pos.ToString());
+
+        // Convert the world pos to the canvas local point
+        //Vector2 canvasLocal;
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, RectTransformUtility.WorldToScreenPoint(null, worldPos), null, out canvasLocal);
+
+        //go.position = landmarkPos;
+
+        Instantiate(uiPrefab,landmarkPos*100,Quaternion.identity);
+
     }
 
     //protected void UpdateCurrentTarget<TValue>(TValue newTarget, ref TValue currentTarget)

@@ -41,6 +41,16 @@ public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
             });
         }
     }
+    public void DrawWorldHand(IReadOnlyList<mptcc.Landmark> targets, bool visualizeZ = true)
+    {
+        if (ActivateForFingerLandMark(targets))
+        {
+            CallActionForAll(targets, (annotation, target) =>
+            {
+                if (annotation != null) { annotation.DrawWorldHand(in target, visualizeZ); }
+            });
+        }
+    }
 
     protected override OnePointAnnotation InstantiateChild(bool isActive = true)
     {

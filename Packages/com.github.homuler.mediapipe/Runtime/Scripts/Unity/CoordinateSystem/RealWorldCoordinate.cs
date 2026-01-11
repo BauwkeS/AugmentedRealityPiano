@@ -5,6 +5,8 @@
 // https://opensource.org/licenses/MIT.
 
 using UnityEngine;
+using mptcc = Mediapipe.Tasks.Components.Containers;
+
 
 namespace Mediapipe.Unity.CoordinateSystem
 {
@@ -71,12 +73,28 @@ namespace Mediapipe.Unity.CoordinateSystem
       return RealWorldToLocalPoint(landmark.X, landmark.Y, landmark.Z, scale, imageRotation, isMirrored);
     }
 
-    /// <summary>
-    ///   When the image is rotated back, returns whether the axis parallel to the X axis of the Unity coordinates is pointing in the same direction as the X axis of the Unity coordinates.
-    ///   For example, if <paramref name="rotationAngle" /> is <see cref="RotationAngle.Rotation90" /> and <paramRef name="isMirrored" /> is <c>false</c>, this returns <c>true</c>
-    ///   because the original Y axis will be exactly opposite the X axis in Unity coordinates if the image is rotated back.
-    /// </summary>
-    public static bool IsXReversed(RotationAngle rotationAngle, bool isMirrored = false)
+        /// <summary>
+        ///   Get the coordinates represented by <paramref name="landmark" /> in the local coordinate system.
+        /// </summary>
+        /// <param name="scale">Ratio of real world coordinate values to local coordinate values</param>
+        /// <param name="imageRotation">
+        ///   Counterclockwise rotation angle of the input image in the image coordinate system.
+        ///   In the local coordinate system, this value will often represent a clockwise rotation angle.
+        /// </param>
+        /// <param name="isMirrored">Set to true if the original coordinates is mirrored</param>
+        public static Vector3 GetPoint(this UnityEngine.Rect _, in mptcc.Landmark landmark, Vector3 scale, RotationAngle imageRotation = RotationAngle.Rotation0, bool isMirrored = false)
+        {
+            return RealWorldToLocalPoint(landmark.x*100, landmark.y*100, landmark.z * 100, scale, imageRotation, isMirrored);
+        }
+
+
+
+        /// <summary>
+        ///   When the image is rotated back, returns whether the axis parallel to the X axis of the Unity coordinates is pointing in the same direction as the X axis of the Unity coordinates.
+        ///   For example, if <paramref name="rotationAngle" /> is <see cref="RotationAngle.Rotation90" /> and <paramRef name="isMirrored" /> is <c>false</c>, this returns <c>true</c>
+        ///   because the original Y axis will be exactly opposite the X axis in Unity coordinates if the image is rotated back.
+        /// </summary>
+        public static bool IsXReversed(RotationAngle rotationAngle, bool isMirrored = false)
     {
       return isMirrored ?
         rotationAngle == RotationAngle.Rotation0 || rotationAngle == RotationAngle.Rotation90 :

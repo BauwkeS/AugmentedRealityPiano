@@ -9,6 +9,7 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
 #pragma warning disable IDE0065
     using Color = UnityEngine.Color;
 using static UnityEngine.GraphicsBuffer;
+using Mediapipe.Tasks.Components.Containers;
 #pragma warning restore IDE0065
 
 
@@ -86,10 +87,22 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
             _landmarkListAnnotation.Draw(target, visualizeZ);
         }
     }
+    public void DrawWorldHand(IReadOnlyList<mptcc.Landmark> target, bool visualizeZ = false)
+    {
+        if (ActivateFor(target))
+        {
+            _landmarkListAnnotation.DrawWorldHand(target, visualizeZ);
+        }
+    }
 
     public void Draw(mptcc.NormalizedLandmarks target, bool visualizeZ = false)
     {
         Draw(target.landmarks, visualizeZ);
+    }
+
+    public void DrawWorldHand(Landmarks target, bool visualizeZ = false)
+    {
+        DrawWorldHand(target.landmarks, visualizeZ);
     }
 
     private void OnlyActivateFingertips()

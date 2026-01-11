@@ -16,6 +16,8 @@ using Mediapipe.Unity;
 using Mediapipe;
 using System;
 using System.Xml.Serialization;
+using Mediapipe.Tasks.Components.Containers;
+using static UnityEngine.GraphicsBuffer;
 #pragma warning restore IDE0065
 
 
@@ -90,6 +92,17 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
             CallActionForAll(targets, (annotation, target) =>
             {
                 if (annotation != null) { annotation.Draw(target, visualizeZ); }
+            });
+        }
+    }
+
+    public void DrawWorldHand(IReadOnlyList<Landmarks> landmarks, GameObject prefabToSpawn, bool visualizeZ = false)
+    {
+        if (ActivateFor(landmarks))
+        {
+            CallActionForAll(landmarks, (annotation, target) =>
+            {
+                if (annotation != null) { annotation.DrawWorldHand(target, visualizeZ); }
             });
         }
     }
