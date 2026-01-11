@@ -152,11 +152,11 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
     //    // It's assumed that target has not changed iff previous target and new target are both null.
     //    return currentTarget != null || newTarget != null;
     //}
-    public void DrawNow(HandLandmarkerResult target)
-    {
-        target.CloneTo(ref _currentTarget);
-        SyncNow();
-    }
+    //public void DrawNow(HandLandmarkerResult target)
+    //{
+    //    target.CloneTo(ref _currentTarget);
+    //    SyncNow();
+    //}
 
     public void DrawLater(HandLandmarkerResult target) => UpdateCurrentTarget(target);
 

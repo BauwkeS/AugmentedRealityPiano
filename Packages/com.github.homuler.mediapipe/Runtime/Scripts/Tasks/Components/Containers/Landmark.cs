@@ -122,9 +122,14 @@ namespace Mediapipe.Tasks.Components.Containers
 
     internal NormalizedLandmark(float x, float y, float z, float? visibility, float? presence, string name)
     {
-      this.x = x;
-      this.y = y;
-      this.z = z;
+            //this.x = (float)Math.Round(x,3);
+            //this.y = (float)Math.Round(y, 3);
+            //this.y = (float)Math.Round(y, 3);
+            //this.z = (float)Math.Round(z, 4);
+            //this.x = this.x - x > 0.0005f || this.x - x < -0.0005f ? (float)Math.Round(x, 3) : x;
+            this.x = (float)Math.Round(x, 3);
+            this.y = (float)Math.Round(y, 3);
+      this.z = (float)Math.Round(z, 4);
       this.visibility = visibility;
       this.presence = presence;
       this.name = name;

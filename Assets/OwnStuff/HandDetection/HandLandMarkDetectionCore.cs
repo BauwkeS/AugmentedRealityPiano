@@ -39,6 +39,7 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 
         var options = config.GetHandLandmarkerOptions(OnHandLandmarkDetectionOutput);
         taskApi = HandLandmarker.CreateFromOptions(options, Mediapipe.Unity.GpuManager.GpuResources);
+        //taskApi = HandLandmarker.CreateFromOptions(options, Mediapipe.Unity.GpuManager.GpuResources);
         var imageSource = Mediapipe.Unity.Sample.ImageSourceProvider.ImageSource;
 
         yield return imageSource.Play();
@@ -69,7 +70,7 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
         var result = HandLandmarkerResult.Alloc(options.numHands);
 
         // NOTE: we can share the GL context of the render thread with MediaPipe (for now, only on Android)
-        //var canUseGpuImage = SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES3 && Mediapipe.Unity.GpuManager.GpuResources != null;
+       // var canUseGpuImage = SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES3 && Mediapipe.Unity.GpuManager.GpuResources != null;
         //using var glContext = canUseGpuImage ? Mediapipe.Unity.GpuManager.GetGlContext() : null;
 
         while (true)
@@ -90,21 +91,26 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
             //switch (config.ImageReadMode)
             //{
             //    case Mediapipe.Unity.ImageReadMode.GPU:
-            //        if (!canUseGpuImage)
-            //        {
-            //            throw new System.Exception("ImageReadMode.GPU is not supported");
-            //        }
-            //        textureFrame.ReadTextureOnGPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-            //        image = textureFrame.BuildGPUImage(glContext);
-            //        // TODO: Currently we wait here for one frame to make sure the texture is fully copied to the TextureFrame before sending it to MediaPipe.
-            //        // This usually works but is not guaranteed. Find a proper way to do this. See: https://github.com/homuler/MediaPipeUnityPlugin/pull/1311
-            //        yield return waitForEndOfFrame;
+            //        //if (!canUseGpuImage)
+            //        //{
+            //        //    throw new System.Exception("ImageReadMode.GPU is not supported");
+            //        //}
+            //        //textureFrame.ReadTextureOnGPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            //        //image = textureFrame.BuildGPUImage(glContext);
+            //        //// TODO: Currently we wait here for one frame to make sure the texture is fully copied to the TextureFrame before sending it to MediaPipe.
+            //        //// This usually works but is not guaranteed. Find a proper way to do this. See: https://github.com/homuler/MediaPipeUnityPlugin/pull/1311
+            //        //yield return waitForEndOfFrame;
             //        break;
             //    case Mediapipe.Unity.ImageReadMode.CPU:
             //        yield return waitForEndOfFrame;
             //        textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
             //        image = textureFrame.BuildCPUImage();
             //        textureFrame.Release();
+
+
+            //        //running mode livetsream
+            //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
+
             //        break;
             //    case Mediapipe.Unity.ImageReadMode.CPUAsync:
             //    default:
@@ -118,23 +124,49 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
             //        }
             //        image = textureFrame.BuildCPUImage();
             //        textureFrame.Release();
+
+            //        //running mode livetsream
+            //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
             //        break;
             //}
 
-            if (imageSource.GetCurrentTexture().updateCount == 0)
+            req = textureFrame.ReadTextureAsync(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            
+
+            if (req.hasError)
             {
-                // No new frame
-                textureFrame.Release();
-                yield return new WaitForEndOfFrame();
+                Debug.LogWarning($"Failed to read texture from the image source");
                 continue;
             }
-
-            textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
             image = textureFrame.BuildCPUImage();
             textureFrame.Release();
-            yield return waitForEndOfFrame;
 
+            yield return waitUntilReqDone;
+
+            //running mode livetsream
             taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
+            
+            
+            
+          //  yield return new WaitForSeconds(0.1f);
+
+
+            //if (imageSource.GetCurrentTexture().updateCount == 0)
+            //{
+            //    // No new frame
+            //    textureFrame.Release();
+            //    yield return new WaitForEndOfFrame();
+            //    continue;
+            //}
+
+            //textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
+            //image = textureFrame.BuildCPUImage();
+            //textureFrame.Release();
+            //yield return waitForEndOfFrame;
+
+
+            //running mode livetsream
+            // taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
 
 
             //switch (taskApi.runningMode)
@@ -163,6 +195,7 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
             //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
             //        break;
             //}
+
         }
     }
 
