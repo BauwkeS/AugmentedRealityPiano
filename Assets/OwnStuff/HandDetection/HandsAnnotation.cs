@@ -62,15 +62,26 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
             base.rotationAngle = value;
         }
     }
-
-
-    private void Start()
+    private void Awake()
     {
+        if (_pointAllAnnotationPrefab == null)
+        {
+            Debug.LogError("Point All Annotation Prefab is not assigned in the inspector.");
+        }
         Instantiate(_pointAllAnnotationPrefab, transform);
 
         _landmarkListAnnotation = GetComponentInChildren<AllPointsAnnotation>();
         _landmarkListAnnotation.Fill(_LandmarkCount);
         OnlyActivateFingertips();
+    }
+
+    private void Start()
+    {
+        //Instantiate(_pointAllAnnotationPrefab, transform);
+
+        //_landmarkListAnnotation = GetComponentInChildren<AllPointsAnnotation>();
+        //_landmarkListAnnotation.Fill(_LandmarkCount);
+        //OnlyActivateFingertips();
     }
 
 

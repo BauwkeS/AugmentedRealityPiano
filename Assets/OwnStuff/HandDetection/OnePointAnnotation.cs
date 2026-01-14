@@ -63,21 +63,34 @@ public class OnePointAnnotation : HierarchicalAnnotation
       if (ActivateForFingerLandMark(target))
       {
             var oldpos = transform.position;
+            float multiplyer = 1.0f;
+            float roundingFactor = 100.0f;
 
             //var position = GetScreenRect().GetPoint(target, Vector3.one ,rotationAngle, isMirrored);
-            var position = RealWorldCoordinate.RealWorldToLocalPoint(
-            target.x*100,target.y*100, target.z*100, Vector3.one ,rotationAngle, isMirrored);
+
+
+            //var position = RealWorldCoordinate.RealWorldToLocalPoint(
+            //target.x*multiplyer,target.y* multiplyer, target.z* multiplyer, Vector3.one ,rotationAngle, isMirrored);
+
+            var position = GetScreenRect().GetPoint(in target, Vector3.one * multiplyer, rotationAngle, isMirrored);
+
+            //Yreversed = true
+
+
             //if (!visualizeZ)
             //{
-            //  position.z = 0.0f;
+            //    position.z = 0.0f;
             //}
-            position.x = Mathf.Round(position.x*1000)/1000;
-            position.y = Mathf.Round(position.y * 1000) / 1000;
-            position.z = Mathf.Round(position.z * 1000) / 1000;
+
+
+            position.x = Mathf.Round(position.x*  roundingFactor) / roundingFactor;
+            position.y = Mathf.Round(position.y * roundingFactor) / roundingFactor;
+            position.z = Mathf.Round(position.z * roundingFactor) / roundingFactor;
 
 
             if (!NewPositionFarEnough(oldpos, position, 1f)) return;
-            Debug.Log("Moving with distance of: " + Vector3.Distance(oldpos, position));
+            //Debug.Log("Moving with distance of: " + Vector3.Distance(oldpos, position));
+
 
             //float newX = Mathf.Abs(oldpos.x-position.x) > 5f ? position.x : oldpos.x;
             //float newY = Mathf.Abs(oldpos.y-position.y) > 5f ? position.y : oldpos.y;

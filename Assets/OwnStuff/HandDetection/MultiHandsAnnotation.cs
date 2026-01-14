@@ -28,6 +28,7 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
     //[SerializeField] private GameObject _annotationPrefab;
 
     [SerializeField] private GameObject _handsAnnotationPrefab;
+    [SerializeField] private bool _activePianoOverlay = false;
 
     private List<HandsAnnotation> _children;
     private List<HandsAnnotation> children
@@ -62,14 +63,71 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
     //[SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
     [SerializeField] private Color _fingertipLandmarkColor = Color.blue;
 
+    private void Awake()
+    {
+        GameObject hand1 = Instantiate(_handsAnnotationPrefab, transform);
+        GameObject hand2 = Instantiate(_handsAnnotationPrefab, transform);
+        _children = new List<HandsAnnotation>();
+        _children.AddRange(GetComponentsInChildren<HandsAnnotation>());
+    }
 
     private void Start()
     {
         //2 for 2 hands
-        Instantiate(_handsAnnotationPrefab, transform);
-        Instantiate(_handsAnnotationPrefab, transform);
-        _children = new List<HandsAnnotation>();
-        _children.AddRange(GetComponentsInChildren<HandsAnnotation>());
+        //GameObject hand1 = Instantiate(_handsAnnotationPrefab, transform);
+        //GameObject hand2 = Instantiate(_handsAnnotationPrefab, transform);
+        //_children = new List<HandsAnnotation>();
+        //_children.AddRange(GetComponentsInChildren<HandsAnnotation>());
+
+        if (_activePianoOverlay)
+        {
+
+            var handObjects = GetComponentsInChildren<HandsAnnotation>();
+            GameObject hand1 = handObjects[0].gameObject;
+            GameObject hand2 = handObjects[1].gameObject;
+
+            LayerMask pMask = LayerMask.NameToLayer("Piano");
+
+            SetChildrenToLayer(hand1.transform,pMask);
+            SetChildrenToLayer(hand2.transform,pMask);
+            //hand1.layer = pMask;
+            //hand2.layer = pMask;
+            //foreach (Transform child in hand1.transform)
+            //{
+            //    child.gameObject.layer = pMask;
+            //    if (child.childCount > 0)
+            //    {
+            //        foreach (Transform grandChild in child)
+            //        {
+            //            grandChild.gameObject.layer = pMask;
+
+            //        }
+            //    }
+            //}
+            //foreach (Transform child in hand2.transform)
+            //{
+            //    child.gameObject.layer = pMask;
+            //    if (child.childCount > 0)
+            //    {
+            //        foreach (Transform grandChild in child)
+            //        {
+            //            grandChild.gameObject.layer = pMask;
+            //        }
+            //    }
+            //}
+        }
+    }
+
+    private void SetChildrenToLayer(Transform child, LayerMask layer)
+    {
+        child.gameObject.layer = layer;
+        if (child.childCount > 0)
+        {
+            foreach (Transform grandChild in child)
+            {
+                SetChildrenToLayer(grandChild, layer);
+            }
+        }
     }
 
     private void OnEnable()
