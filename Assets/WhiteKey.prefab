@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10379c528d4cf234e8b373f9cf42d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayPianoKey
+  isTriggered: 0
   pianoNoteSound: {fileID: 0}
 --- !u!23 &3021554067921461322
 MeshRenderer:
