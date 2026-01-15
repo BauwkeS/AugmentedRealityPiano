@@ -113,57 +113,78 @@ public class OnePointAnnotation : HierarchicalAnnotation
         return distance >= threshold;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //  Debug.Log("Piano key pressed by: " + other.gameObject.name);
-        // Here you can add code to play a sound or trigger an animation
-        if (!inPianoKey)
-        {
-            other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
-            lastCollided = other;
-        }
-        //else
-        //{
-        //    if (other.gameObject.name == lastCollided.gameObject.name)
-        //    {
-        //       // Debug.Log("Exiting the same piano key we entered.");
-        //        Debug.Log(other.gameObject.name + " entering same key.");
-        //        // inPianoKey = false;
-        //    }
-        //}
-            inPianoKey = true;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //  Debug.Log("Piano key pressed by: " + other.gameObject.name);
+    //    // Here you can add code to play a sound or trigger an animation
+    //    if (!inPianoKey)
+    //    {
+    //        other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
+    //        lastCollided = other;
+    //    }
+    //    //else
+    //    //{
+    //    //    if (other.gameObject.name == lastCollided.gameObject.name)
+    //    //    {
+    //    //       // Debug.Log("Exiting the same piano key we entered.");
+    //    //        Debug.Log(other.gameObject.name + " entering same key.");
+    //    //        // inPianoKey = false;
+    //    //    }
+    //    //}
+    //        inPianoKey = true;
 
-        //other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
+    //    //other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
 
-    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        //if (other.gameObject.name == lastCollided.gameObject.name)
-        //{
-        //    Debug.Log("Exiting the same piano key we entered.");
-        //    Debug.Log(other.gameObject.name + " exited the piano key trigger.");
-        //    // inPianoKey = false;
-        //}
-        //else
-        //{
-        //     Debug.Log("Exiting a different piano key than we entered.");
-        //}
-
-
-        //inPianoKey = false;
-        // Debug.Log(other.gameObject.name + " exited the piano key trigger.");
-        //chekc if the piano key you are exit colliding with is happening weither while enter another one or maybe exit if that is
-        //this one or another one? check the enter  exit and if you know the last one or maybe you should save it
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    //if (other.gameObject.name == lastCollided.gameObject.name)
+    //    //{
+    //    //    Debug.Log("Exiting the same piano key we entered.");
+    //    //    Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+    //    //    // inPianoKey = false;
+    //    //}
+    //    //else
+    //    //{
+    //    //     Debug.Log("Exiting a different piano key than we entered.");
+    //    //}
 
 
+    //    //inPianoKey = false;
+    //    // Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+    //    //chekc if the piano key you are exit colliding with is happening weither while enter another one or maybe exit if that is
+    //    //this one or another one? check the enter  exit and if you know the last one or maybe you should save it
 
 
-    }
+
+
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {
-         Debug.Log("Collided with: " + collision.gameObject.name);
+        //you first collide again before exiting the other one
+        //you can check if you are still collided with something first before exiting
+        if (!inPianoKey)
+        {
+            Debug.Log("Collided with: " + collision.gameObject.name);
+            inPianoKey = true;
+            collision.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
+
+        }
+        lastCollided = collision.collider;
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        bool trig = collision.gameObject.GetComponent<PlayPianoKey>().isTriggered;
+
+        if (collision.collider == lastCollided && !trig)
+        {
+            Debug.Log("Stopped colliding with: " + collision.gameObject.name);
+            inPianoKey = false;
+        }
     }
 
 }

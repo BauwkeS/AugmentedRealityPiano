@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayPianoKey : MonoBehaviour
 {
-    //private bool isTriggered = false;
+    public bool isTriggered = false;
     [SerializeField] private AudioClip pianoNoteSound;
 
     private AudioSource audioSource;
@@ -34,11 +34,19 @@ public class PlayPianoKey : MonoBehaviour
     //        // Here you can add code to play a sound or trigger an animation
     //    }
     //}
-    private void OnTriggerExit(Collider other)
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    // other.gameObject.
+    //    //isTriggered = false;
+    //    //Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+    //    Debug.Log("Stopped colliding with: " + other.gameObject.name);
+
+    //}
+
+    private void OnCollisionExit(Collision collision)
     {
-       // other.gameObject.
-        //isTriggered = false;
-        //Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+        isTriggered = false;
+        Debug.Log("Stopped colliding with: " + collision.gameObject.name);
     }
 
     public void PlayNote()
@@ -46,6 +54,7 @@ public class PlayPianoKey : MonoBehaviour
         if (pianoNoteSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(pianoNoteSound);
+            isTriggered = true;
         }
     }
 }
