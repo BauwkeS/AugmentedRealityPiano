@@ -101,7 +101,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -124,5 +124,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65ed9775dc04be418b7f81eda24e5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnePointAnnotation
-  _color: {r: 0, g: 1, b: 0, a: 1}
-  _radius: 15

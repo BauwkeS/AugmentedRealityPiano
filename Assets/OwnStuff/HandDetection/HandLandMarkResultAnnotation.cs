@@ -7,7 +7,7 @@ using Mediapipe.Tasks.Components.Containers;
 public class HandLandMarkResultAnnotation : MonoBehaviour
 {
     [SerializeField] protected MultiHandsAnnotation annotation;
-    [SerializeField] protected MultiHandsAnnotation annotationForWorld;
+    //[SerializeField] protected MultiHandsAnnotation annotationForWorld;
 
     protected bool isStale = false;
 
@@ -74,11 +74,11 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
             Destroy(annotation);
             annotation = null;
         }
-        if (annotationForWorld != null)
-        {
-            Destroy(annotationForWorld);
-            annotationForWorld = null;
-        }
+        //if (annotationForWorld != null)
+        //{
+        //    Destroy(annotationForWorld);
+        //    annotationForWorld = null;
+        //}
         isStale = false;
     }
 
@@ -88,9 +88,9 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
         {
             isStale = false;
             annotation.SetThoseColors();
-            annotationForWorld.SetThoseColors();
+           // annotationForWorld.SetThoseColors();
             annotation.Draw(_currentTarget.handLandmarks, _visualizeZ);
-            annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ);
+           // annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ);
 
 
         }

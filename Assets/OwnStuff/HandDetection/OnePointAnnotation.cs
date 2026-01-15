@@ -8,10 +8,14 @@ using mptcc = Mediapipe.Tasks.Components.Containers;
   using Color = UnityEngine.Color;
 using Mediapipe.Unity;
 using Mediapipe;
+using UnityEngine.Audio;
 #pragma warning restore IDE0065
 
 public class OnePointAnnotation : HierarchicalAnnotation
   {
+    public bool inPianoKey = false;
+
+
     private void OnEnable()
     {
         transform.localScale = 15.0f * Vector3.one; //15.0f is the radius of the dot
@@ -106,6 +110,25 @@ public class OnePointAnnotation : HierarchicalAnnotation
     {
         var distance = Vector3.Distance(oldPos, newPos);
         return distance >= threshold;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //  Debug.Log("Piano key pressed by: " + other.gameObject.name);
+        // Here you can add code to play a sound or trigger an animation
+        if (!inPianoKey) other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
+        inPianoKey = true;
+
+        //other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //inPianoKey = false;
+     //   Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+     //chekc if the piano key you are exit colliding with is happening weither while enter another one or maybe exit if that is
+     //this one or another one? check the enter  exit and if you know the last one or maybe you should save it
     }
 }
 
