@@ -14,6 +14,7 @@ using UnityEngine.Audio;
 public class OnePointAnnotation : HierarchicalAnnotation
   {
     public bool inPianoKey = false;
+    private Collider lastCollided;
 
 
     private void OnEnable()
@@ -116,8 +117,21 @@ public class OnePointAnnotation : HierarchicalAnnotation
     {
         //  Debug.Log("Piano key pressed by: " + other.gameObject.name);
         // Here you can add code to play a sound or trigger an animation
-        if (!inPianoKey) other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
-        inPianoKey = true;
+        if (!inPianoKey)
+        {
+            other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
+            lastCollided = other;
+        }
+        //else
+        //{
+        //    if (other.gameObject.name == lastCollided.gameObject.name)
+        //    {
+        //       // Debug.Log("Exiting the same piano key we entered.");
+        //        Debug.Log(other.gameObject.name + " entering same key.");
+        //        // inPianoKey = false;
+        //    }
+        //}
+            inPianoKey = true;
 
         //other.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
 
@@ -125,10 +139,32 @@ public class OnePointAnnotation : HierarchicalAnnotation
 
     private void OnTriggerExit(Collider other)
     {
+        //if (other.gameObject.name == lastCollided.gameObject.name)
+        //{
+        //    Debug.Log("Exiting the same piano key we entered.");
+        //    Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+        //    // inPianoKey = false;
+        //}
+        //else
+        //{
+        //     Debug.Log("Exiting a different piano key than we entered.");
+        //}
+
+
         //inPianoKey = false;
-     //   Debug.Log(other.gameObject.name + " exited the piano key trigger.");
-     //chekc if the piano key you are exit colliding with is happening weither while enter another one or maybe exit if that is
-     //this one or another one? check the enter  exit and if you know the last one or maybe you should save it
+        // Debug.Log(other.gameObject.name + " exited the piano key trigger.");
+        //chekc if the piano key you are exit colliding with is happening weither while enter another one or maybe exit if that is
+        //this one or another one? check the enter  exit and if you know the last one or maybe you should save it
+
+
+
+
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+         Debug.Log("Collided with: " + collision.gameObject.name);
+    }
+
 }
 
