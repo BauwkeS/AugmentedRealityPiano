@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayPianoKey : MonoBehaviour
 {
-    public bool isTriggered = false;
+   // public bool isTriggered = false;
     [SerializeField] private AudioClip pianoNoteSound;
 
     private AudioSource audioSource;
@@ -43,18 +43,18 @@ public class PlayPianoKey : MonoBehaviour
 
     //}
 
-    private void OnCollisionExit(Collision collision)
-    {
-        isTriggered = false;
-        Debug.Log("Stopped colliding with: " + collision.gameObject.name);
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    isTriggered = false;
+    //    Debug.Log("Stopped colliding with in pianokey: " + collision.gameObject.name);
+    //}
 
     public void PlayNote()
     {
         if (pianoNoteSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(pianoNoteSound);
-            isTriggered = true;
+            //isTriggered = true;
         }
     }
 }

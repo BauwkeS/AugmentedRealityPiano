@@ -167,25 +167,32 @@ public class OnePointAnnotation : HierarchicalAnnotation
         //you can check if you are still collided with something first before exiting
         if (!inPianoKey)
         {
-            Debug.Log("Collided with: " + collision.gameObject.name);
+          //  Debug.Log("Collided with: " + collision.gameObject.name);
             inPianoKey = true;
             collision.gameObject.GetComponent<PlayPianoKey>()?.PlayNote();
 
         }
         lastCollided = collision.collider;
 
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        bool trig = collision.gameObject.GetComponent<PlayPianoKey>().isTriggered;
-
-        if (collision.collider == lastCollided && !trig)
+        if (collision.gameObject.tag == "PianoCollider")
         {
-            Debug.Log("Stopped colliding with: " + collision.gameObject.name);
+         //   Debug.Log("Collided with piano key collider: " + collision.gameObject.name);
             inPianoKey = false;
         }
+
     }
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    bool trig = collision.gameObject.GetComponent<PlayPianoKey>().isTriggered;
+
+    //    if (collision.collider == lastCollided && !trig)
+    //    {
+    //        Debug.Log("Last collided with: " + lastCollided.gameObject.name);
+    //        Debug.Log("Stopped colliding with in pointAnnotation: " + collision.gameObject.name);
+    //        inPianoKey = false;
+    //    }
+    //}
 
 }
 

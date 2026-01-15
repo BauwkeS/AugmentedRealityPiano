@@ -112,8 +112,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!82 &-4944100139256415398
 AudioSource:
   m_ObjectHideFlags: 0
@@ -223,7 +223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10379c528d4cf234e8b373f9cf42d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayPianoKey
-  isTriggered: 0
   pianoNoteSound: {fileID: 0}
 --- !u!54 &203418044910746989
 Rigidbody:

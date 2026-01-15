@@ -120,6 +120,7 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
     {
         for (int i = 0; i < _landmarkListAnnotation.count; i++)
         {
+           // if (i == 8)
             if (i == 4 || i == 8 || i == 12 || i == 16 || i == 20)
             {
                 _landmarkListAnnotation[i].SetActive(true);
