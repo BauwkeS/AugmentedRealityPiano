@@ -27,10 +27,10 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 
     protected override IEnumerator Run()
     {
-        Debug.Log($"Delegate = {config.Delegate}");
-        Debug.Log($"Image Read Mode = {config.ImageReadMode}");
-        Debug.Log($"Running Mode = {config.RunningMode}");
-        Debug.Log($"NumHands = {config.NumHands}");
+       // Debug.Log($"Delegate = {config.Delegate}");
+       // Debug.Log($"Image Read Mode = {config.ImageReadMode}");
+        //Debug.Log($"Running Mode = {config.RunningMode}");
+     //   Debug.Log($"NumHands = {config.NumHands}");
        // Debug.Log($"MinHandDetectionConfidence = {config.MinHandDetectionConfidence}");
         //Debug.Log($"MinHandPresenceConfidence = {config.MinHandPresenceConfidence}");
         //Debug.Log($"MinTrackingConfidence = {config.MinTrackingConfidence}");

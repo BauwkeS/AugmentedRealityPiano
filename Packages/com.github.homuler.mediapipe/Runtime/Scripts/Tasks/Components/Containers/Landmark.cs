@@ -116,7 +116,19 @@ namespace Mediapipe.Tasks.Components.Containers
     public readonly float? presence;
     public readonly string name;
 
-    internal NormalizedLandmark(float x, float y, float z, float? visibility, float? presence) : this(x, y, z, visibility, presence, null)
+        public void SetPoint(float newX, float newY, float newZ)
+        {
+            // Since it's a readonly struct, we cannot modify its fields directly.
+            // However, we can use reflection to set the values.
+            var xField = typeof(NormalizedLandmark).GetField("x", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var yField = typeof(NormalizedLandmark).GetField("y", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var zField = typeof(NormalizedLandmark).GetField("z", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (xField != null) xField.SetValue(this, newX);
+            if (yField != null) yField.SetValue(this, newY);
+            if (zField != null) zField.SetValue(this, newZ);
+        }
+
+        internal NormalizedLandmark(float x, float y, float z, float? visibility, float? presence) : this(x, y, z, visibility, presence, null)
     {
     }
 
@@ -253,7 +265,15 @@ namespace Mediapipe.Tasks.Components.Containers
       this.landmarks = landmarks;
     }
 
-    public static NormalizedLandmarks Alloc(int capacity) => new NormalizedLandmarks(new List<NormalizedLandmark>(capacity));
+        public int Count
+        {
+            get
+            {
+                return landmarks != null ? landmarks.Count : 0;
+            }
+        }
+
+        public static NormalizedLandmarks Alloc(int capacity) => new NormalizedLandmarks(new List<NormalizedLandmark>(capacity));
 
     public static NormalizedLandmarks CreateFrom(NormalizedLandmarkList proto)
     {
@@ -303,5 +323,14 @@ namespace Mediapipe.Tasks.Components.Containers
     }
 
     public override string ToString() => $"{{ \"landmarks\": {Util.Format(landmarks)} }}";
-  }
+
+        //public NormalizedLandmark GetLandmark(int j)
+        //{
+        //    return landmarks[j];
+        //}
+
+        //public void SetLandmark(int j, NormalizedLandmark sumPoint)
+        //{ landmarks[j] = sumPoint;
+        //}
+    }
 }
