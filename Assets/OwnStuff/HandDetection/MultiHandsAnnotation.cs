@@ -101,13 +101,13 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
         }
     }
 
-    public void Draw(IReadOnlyList<mptcc.NormalizedLandmarks> targets, bool visualizeZ = false)
+    public void Draw(IReadOnlyList<mptcc.NormalizedLandmarks> targets, bool visualizeZ = false, bool EnableDistanceFiltering = true)
     {
         if (ActivateFor(targets))
         {
             CallActionForAll(targets, (annotation, target) =>
             {
-                if (annotation != null) { annotation.Draw(target, visualizeZ); }
+                if (annotation != null) { annotation.Draw(target, visualizeZ,EnableDistanceFiltering); }
             });
         }
     }

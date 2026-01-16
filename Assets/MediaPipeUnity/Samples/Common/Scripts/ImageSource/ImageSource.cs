@@ -64,6 +64,9 @@ namespace Mediapipe.Unity
     public virtual double frameRate => resolution.frameRate;
     public float focalLengthPx { get; } = 2.0f; // TODO: calculate at runtime
     public virtual bool isHorizontallyFlipped { get; set; } = false;
+    public virtual bool showDebug { get; set; } = false;
+    public virtual bool distanceFilter { get; set; } = false;
+    public virtual bool averageFilter { get; set; } = false;
     public virtual bool isVerticallyFlipped { get; } = false;
     public virtual bool isFrontFacing { get; } = false;
     public virtual RotationAngle rotation { get; } = RotationAngle.Rotation0;
@@ -155,6 +158,19 @@ namespace Mediapipe.Unity
     {
       return GraphicsFormatUtility.GetTextureFormat(texture.graphicsFormat);
     }
+        public struct TestingConfiguration
+        {
+            public bool showDebug;
+            public bool distanceFilter;
+            public bool averageFilter;
+
+            private TestingConfiguration(bool showDebug, bool distanceFilter, bool averageFilter)
+            {
+                this.showDebug = showDebug;
+                this.distanceFilter = distanceFilter;
+                this.averageFilter = averageFilter;
+            }
+        }
 
     public Experimental.ImageTransformationOptions GetTransformationOptions(bool expectedToBeMirrored = false)
     {
@@ -166,5 +182,17 @@ namespace Mediapipe.Unity
             //automatically make it horizontal and never flip because its a phone and you want it horizontal like that
       return Experimental.ImageTransformationOptions.Build(shouldFlipHorizontally, shouldFlipVertically, rotation);
     }
-  }
+
+        public TestingConfiguration GetTestingConfig()
+        {
+            return new TestingConfiguration
+            {
+                showDebug = showDebug,
+                distanceFilter = distanceFilter,
+                averageFilter = averageFilter
+            };
+        }
+
+
+    }
 }

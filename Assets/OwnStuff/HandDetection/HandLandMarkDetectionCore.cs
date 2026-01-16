@@ -57,6 +57,9 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
         var flipVertically = transformationOptions.flipVertically;
         var imageProcessingOptions = new Mediapipe.Tasks.Vision.Core.ImageProcessingOptions(rotationDegrees: (int)transformationOptions.rotationAngle);
 
+
+       // var testingOptions = imageSource.GetTestingConfig();
+
         AsyncGPUReadbackRequest req = default;
         var waitUntilReqDone = new WaitUntil(() => req.done);
         var waitForEndOfFrame = new WaitForEndOfFrame();

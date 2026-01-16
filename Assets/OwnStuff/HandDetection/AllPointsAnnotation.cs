@@ -30,13 +30,13 @@ public class AllPointsAnnotation : ListAnnotation<OnePointAnnotation>
         children[pointIndex].SetColor(color);
     }
 
-    public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> targets, bool visualizeZ = true)
+    public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> targets, bool visualizeZ = true, bool EnableDistanceFiltering = true)
     {
         if (ActivateForFingerLandMark(targets))
         {
             CallActionForAll(targets, (annotation, target) =>
             {
-                if (annotation != null) { annotation.Draw(in target, visualizeZ); }
+                if (annotation != null) { annotation.Draw(in target, visualizeZ, EnableDistanceFiltering); }
             });
         }
     }

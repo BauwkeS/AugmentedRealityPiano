@@ -49,5 +49,6 @@ public abstract class TaskApiRunner<TTask> : BaseRunner where TTask : Mediapipe.
     {
         annotationController.isMirrored = expectedToBeMirrored;
         annotationController.imageSize = new Vector2Int(imageSource.textureWidth, imageSource.textureHeight);
+        annotationController.testingConfig = imageSource.GetTestingConfig();
     }
 }

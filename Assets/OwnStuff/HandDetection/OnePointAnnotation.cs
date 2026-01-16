@@ -32,15 +32,22 @@ public class OnePointAnnotation : HierarchicalAnnotation
         GetComponent<Renderer>().material.color = color;
     }
 
-    public void Draw(in mptcc.NormalizedLandmark target, bool visualizeZ = true)
+    public void Draw(in mptcc.NormalizedLandmark target, bool visualizeZ = true, bool EnableDistanceFiltering = true)
     {
       if (ActivateForFingerLandMark(target))
       {
             var oldpos = transform.localPosition;
         var position = GetScreenRect().GetPoint(in target, rotationAngle, isMirrored);
-            position.x= Mathf.Round(position.x);
-            position.y= Mathf.Round(position.y);
-            position.z= Mathf.Round(position.z);
+
+            Debug.Log("have distance filtering: " + EnableDistanceFiltering);
+
+            if (EnableDistanceFiltering)
+            {
+                position.x = Mathf.Round(position.x);
+                position.y = Mathf.Round(position.y);
+                position.z = Mathf.Round(position.z);
+            }
+            
 
             if (!visualizeZ)
             {

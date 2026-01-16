@@ -81,11 +81,11 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
         SetColorOfFingerTips(fingertipColor);
     }
 
-    public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> target, bool visualizeZ = false)
+    public void Draw(IReadOnlyList<mptcc.NormalizedLandmark> target, bool visualizeZ = false, bool EnableDistanceFiltering = true)
     {
         if (ActivateFor(target))
         {
-            _landmarkListAnnotation.Draw(target, visualizeZ);
+            _landmarkListAnnotation.Draw(target, visualizeZ, EnableDistanceFiltering);
         }
     }
     public void DrawWorldHand(IReadOnlyList<mptcc.Landmark> target, bool visualizeZ = false)
@@ -96,9 +96,9 @@ public sealed class HandsAnnotation : HierarchicalAnnotation
         }
     }
 
-    public void Draw(mptcc.NormalizedLandmarks target, bool visualizeZ = false)
+    public void Draw(mptcc.NormalizedLandmarks target, bool visualizeZ = false, bool EnableDistanceFiltering = true)
     {
-        Draw(target.landmarks, visualizeZ);
+        Draw(target.landmarks, visualizeZ,EnableDistanceFiltering);
     }
 
     public void DrawWorldHand(Landmarks target, bool visualizeZ = false)

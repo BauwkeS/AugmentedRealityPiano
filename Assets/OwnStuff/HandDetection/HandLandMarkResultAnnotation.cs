@@ -5,6 +5,7 @@ using Mediapipe.Unity;
 using Mediapipe.Tasks.Components.Containers;
 using System.Collections.Generic;
 using Mediapipe;
+using static Mediapipe.Unity.ImageSource;
 
 public class HandLandMarkResultAnnotation : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
     List<List<NormalizedLandmarks>> landmarkBufferList = new List<List<NormalizedLandmarks>>();
     [SerializeField] int maxBufferListSize = 5;
     List<NormalizedLandmarks> bufferedLandmarkList = new List<NormalizedLandmarks>();
+    [SerializeField] GameObject pianoCollisionDebug;
+    [SerializeField] GameObject SetDebugItems;
 
     protected bool isStale = false;
 
@@ -49,6 +52,11 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
 
     public Vector2Int imageSize { get; set; }
 
+    public TestingConfiguration testingConfig;
+
+    private IBoundsRenderer boundsRenderer;
+
+
     protected virtual void Start()
     {
         if (!TryGetComponent<RectTransform>(out var _))
@@ -62,6 +70,8 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
             rectTransform.anchoredPosition3D = Vector3.zero;
             rectTransform.sizeDelta = Vector2.zero;
         }
+
+        boundsRenderer = SetDebugItems.AddComponent<PianoGizmoRenderer>();
     }
 
     protected virtual void LateUpdate()
@@ -87,26 +97,71 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
         //}
         isStale = false;
     }
-
+     
     protected void SyncNow()
     {
-        UpdateBufferLandmark();
+        // annotationForWorld.SetThoseColors(); //colors for world input
+        // annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ); //draw the input but in world coords
 
-
-        lock (_currentTargetLock)
+        if (testingConfig.averageFilter)
         {
-            isStale = false;
-            annotation.SetThoseColors();
-            annotation.Draw(bufferedLandmarkList, _visualizeZ); //draw from buffered landmarks for smoothing
-           // annotation.Draw(_currentTarget.handLandmarks, _visualizeZ); //normal draw from input
+            UpdateBufferLandmark();
 
-
-           // annotationForWorld.SetThoseColors(); //colors for world input
-           // annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ); //draw the input but in world coords
-
-
+            lock (_currentTargetLock)
+            {
+                Debug.Log("Using Averaged Landmarks for Smoother Drawing");
+                isStale = false;
+                annotation.SetThoseColors();
+                annotation.Draw(bufferedLandmarkList, _visualizeZ, testingConfig.distanceFilter); //draw from buffered landmarks for smoothing
+            } 
         }
+        else
+        {
+            lock (_currentTargetLock)
+            {
+                Debug.Log("Using Normal Landmarks for Drawing");
+                isStale = false;
+                annotation.SetThoseColors();
+                annotation.Draw(_currentTarget.handLandmarks, _visualizeZ, testingConfig.distanceFilter); //normal draw from input 
+            }
+        }
+
+        if (testingConfig.showDebug)
+        {
+            Debug.Log("SHOW DEBUG");
+            SetDebugItems.SetActive(true);
+            if (pianoCollisionDebug != null)
+            {
+                ShowCollider();
+            }
+            
+        }
+        else SetDebugItems.SetActive(false);
     }
+
+    private void ShowCollider()
+    {
+        var colliders = pianoCollisionDebug.GetComponentsInChildren<BoxCollider>();
+        foreach (var c in colliders)
+            boundsRenderer.DrawBox(c);
+    }
+
+    //private void ShowCollider()
+    //{
+    //    Gizmos.color = UnityEngine.Color.yellow;
+
+    //    var getCollisionboxes = pianoCollisionDebug.GetComponentsInChildren<BoxCollider>();
+
+    //    foreach(var col in getCollisionboxes)
+    //    {
+    //        if (col)
+    //        {
+    //            Gizmos.matrix = transform.localToWorldMatrix;
+    //            Gizmos.DrawWireCube(Vector3.zero + col.center, col.size);
+    //        }
+    //    }
+
+    //}
 
 
     private void UpdateBufferLandmark()
