@@ -8,8 +8,11 @@ This has not yet been fully achieved if you're reading this, but at this point i
 This will be worked upon in the future, please keep hold! Feel free to continue to work with what I have:)
 
 
-## LICENSE
+### LICENSE
 Using Homuler project under the MIT license: [MIT](https://github.com/homuler/MediaPipeUnityPlugin/blob/master/LICENSE)
+
+Using piano note sounds from the following post: [POST](https://www.reddit.com/r/piano/comments/3u6ke7/heres_some_midi_and_mp3_files_for_individual/)
+
 
 Note that some files are distributed under other licenses.
 
