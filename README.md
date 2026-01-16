@@ -5,7 +5,7 @@ This is a Unity 6.2 protype research project using part and starting from the [H
 The goal of this project is to play an augmented reality piano on a surface through the hand landmark tracking form MediapPipe and port it to a phone and use the phone camera to display the virtual piano and be able to play it anywhere.
 This has not yet been fully achieved if you're reading this, but at this point in time, you are able to play an AR piano through finger tracking on an android app. This is a static piano and some buffers to increase finger tracking and has a lot of flaws and things to improve.
 
-This will be worked upon in the future, please keep hold! Feel free to continue to work with what I have with due credit:)
+This will be worked upon in the future, please keep hold! Feel free to continue to work with what I have:)
 
 
 ## LICENSE
