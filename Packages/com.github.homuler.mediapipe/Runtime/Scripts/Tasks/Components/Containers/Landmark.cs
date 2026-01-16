@@ -323,14 +323,5 @@ namespace Mediapipe.Tasks.Components.Containers
     }
 
     public override string ToString() => $"{{ \"landmarks\": {Util.Format(landmarks)} }}";
-
-        //public NormalizedLandmark GetLandmark(int j)
-        //{
-        //    return landmarks[j];
-        //}
-
-        //public void SetLandmark(int j, NormalizedLandmark sumPoint)
-        //{ landmarks[j] = sumPoint;
-        //}
     }
 }

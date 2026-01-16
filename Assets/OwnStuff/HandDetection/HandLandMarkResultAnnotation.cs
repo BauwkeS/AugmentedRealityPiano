@@ -9,7 +9,7 @@ using Mediapipe;
 public class HandLandMarkResultAnnotation : MonoBehaviour
 {
     [SerializeField] protected MultiHandsAnnotation annotation;
-    //[SerializeField] protected MultiHandsAnnotation annotationForWorld;
+    //[SerializeField] protected MultiHandsAnnotation annotationForWorld; if worldannotation is wanted comment code back out
     List<List<NormalizedLandmarks>> landmarkBufferList = new List<List<NormalizedLandmarks>>();
     [SerializeField] int maxBufferListSize = 5;
     List<NormalizedLandmarks> bufferedLandmarkList = new List<NormalizedLandmarks>();
@@ -79,6 +79,7 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
             Destroy(annotation);
             annotation = null;
         }
+        //world input cleanup
         //if (annotationForWorld != null)
         //{
         //    Destroy(annotationForWorld);
@@ -96,10 +97,12 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
         {
             isStale = false;
             annotation.SetThoseColors();
-           // annotationForWorld.SetThoseColors();
-            annotation.Draw(bufferedLandmarkList, _visualizeZ);
-           // annotation.Draw(_currentTarget.handLandmarks, _visualizeZ);
-           // annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ);
+            annotation.Draw(bufferedLandmarkList, _visualizeZ); //draw from buffered landmarks for smoothing
+           // annotation.Draw(_currentTarget.handLandmarks, _visualizeZ); //normal draw from input
+
+
+           // annotationForWorld.SetThoseColors(); //colors for world input
+           // annotationForWorld.DrawWorldHand(_currentTarget.handWorldLandmarks,uiPrefab, _visualizeZ); //draw the input but in world coords
 
 
         }
@@ -132,7 +135,6 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
                 bufferedLandmarkList.Clear();
 
                 int frameCount = landmarkBufferList.Count;
-                //int handCount = landmarkBufferList[0].Count;   // usually 2
                 int handCount = _currentTarget.handLandmarks.Count;   // usually 2
                 int jointCount = landmarkBufferList[0][0].Count; // 21
 
@@ -142,15 +144,12 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
 
                     if (handIndex >= landmarkBufferList[0].Count)
                     {
-                        // No hand detected in this frame for this hand index.
-                        // Just add an empty NormalizedLandmarks
+                        //no second hand detected -> add empty landmarks as comparison
                         bufferedLandmarkList.Add(averaged);
                         continue;
                     }
 
                     landmarkBufferList[0][handIndex].CloneTo(ref averaged);
-
-                   // var averagedJoints = new List<Mediapipe.Tasks.Components.Containers.NormalizedLandmark>(jointCount);
 
                     for (int jointIndex = 0; jointIndex < jointCount; jointIndex++)
                     {
@@ -176,212 +175,10 @@ public class HandLandMarkResultAnnotation : MonoBehaviour
                     bufferedLandmarkList.Add(averaged);
                 }
 
-
-                //need to average the xyz position from all the collected points and set that as the averaged position to take
-
-                //all the collected landmarks to calculate
-
-                //List<NormalizedLandmarks> averagedLandmarks = new List<NormalizedLandmarks>();
-
-
-                // bufferedLandmarkList.Clear();
-
-                //foreach (List<NormalizedLandmarks> landmarkLists in landmarkBufferList) //the 5 sets of everything
-                //{
-                //    foreach (NormalizedLandmarks landmarks in landmarkLists) //the 2 hands per set
-                //    {
-                //        //you should check per hand and get the average of each hand separately
-                //        var NormalizedLandmarks = new NormalizedLandmarks();
-
-                //        foreach (NormalizedLandmark landmark in landmarks.landmarks) //the 21 marks in one hand
-                //        {
-                //            landmark.z;
-                //        }
-                //    }
-                //}
-
-
-
-                //average the landmarks
-                //bufferedLandmarkList.Clear();
-                //for (int i = 0; i < 21; i++) //for 21 landmarks
-                //{
-                //    var sumLandmarks = new NormalizedLandmarks();
-
-                //    //you need to fill these landmarksin the sum because they result to 0 right now? or somethimg because line 158 is missing
-
-                //    int count = 0;
-                //    foreach (var landmarkList in landmarkBufferList)
-                //    {
-                //        if (i < landmarkList.Count)
-                //        {
-                //            var landmarks = landmarkList[i];
-                //            for (int j = 0; j < landmarks.Count; j++)
-                //            {
-                //                var point = landmarks.GetLandmark(j);
-                //                var sumPoint = sumLandmarks.GetLandmark(j);
-                //                sumPoint.SetPoint(
-                //                    sumPoint.x + point.x,
-                //                    sumPoint.y + point.y,
-                //                    sumPoint.z + point.z
-                //                );
-                //                sumLandmarks.SetLandmark(j, sumPoint);
-                //            }
-                //            count++;
-                //        }
-                //    }
-                //    //average
-                //    for (int j = 0; j < sumLandmarks.Count; j++)
-                //    {
-                //        var sumPoint = sumLandmarks.GetLandmark(j);
-                //        sumPoint.SetPoint(
-                //            sumPoint.x / count,
-                //            sumPoint.y / count,
-                //            sumPoint.z / count
-                //        );
-
-                //        sumLandmarks.SetLandmark(j, sumPoint);
-                //    }
-                //    //add to the buffered list the end result
-                //    bufferedLandmarkList.Add(sumLandmarks);
-                //}
-
-                //okay so:
-                //you have 2 hands
-                //each hand holds 21 landmarks
-                // you need to average those 21 positions
-                //so for each hand you need to create a new NormalizedLandmarks
-
-
-                //foreach(NormalizedLandmarks landmarksPerHand in landmarkBufferList[0])
-                //{
-                //    var sumLandmarks = NormalizedLandmarks.CreateFrom(landmarksPerHand);
-                //    for (int j = 0; j < landmarksPerHand.Count; j++)
-                //    {
-                //        var sumPoint = new NormalizedLandmark();
-                //        sumLandmarks.landmarks.Add(sumPoint);
-                //    }
-                //    bufferedLandmarkList.Add(sumLandmarks);
-                //}
-
-
-
-
-
-
-
-
-                //average the landmarks
-                //bufferedLandmarkList.Clear();
-                //for (int i = 0; i < clonedLandmarks.Count; i++)
-                //{
-                //    var sumLandmarks = new NormalizedLandmarks();
-
-                //    //you need to fill these landmarksin the sum because they result to 0 right now? or somethimg because line 158 is missing
-
-                //    int count = 0;
-                //    foreach (var landmarkList in landmarkBufferList)
-                //    {
-                //        if (i < landmarkList.Count)
-                //        {
-                //            var landmarks = landmarkList[i];
-                //            for (int j = 0; j < landmarks.Count; j++)
-                //            {
-                //                var point = landmarks.GetLandmark(j);
-                //                var sumPoint = sumLandmarks.GetLandmark(j);
-                //                sumPoint.SetPoint(
-                //                    sumPoint.x + point.x,
-                //                    sumPoint.y + point.y,
-                //                    sumPoint.z + point.z
-                //                );
-                //                sumLandmarks.SetLandmark(j, sumPoint);
-                //            }
-                //            count++;
-                //        }
-                //    }
-                //    //average
-                //    for (int j = 0; j < sumLandmarks.Count; j++)
-                //    {
-                //        var sumPoint = sumLandmarks.GetLandmark(j);
-                //        sumPoint.SetPoint(
-                //            sumPoint.x / count,
-                //            sumPoint.y / count,
-                //            sumPoint.z / count
-                //        );
-
-                //        sumLandmarks.SetLandmark(j, sumPoint);
-                //    }
-                //    //add to the buffered list the end result
-                //    bufferedLandmarkList.Add(sumLandmarks);
-                //}
                 isStale = true;
             }
         }
 }
-
-
-    //private void Update()
-    //{
-    //    // For testing: spawn object at center of screen on space key press
-    //    if (Input.GetKeyDown(KeyCode.P))
-    //    {
-    //        foreach (var worldN in _currentTarget.handWorldLandmarks)
-    //        {
-    //            foreach (var point in worldN.landmarks)
-    //            {
-    //                if(point.)
-    //                SpawnHandsWorld(point);
-    //            }
-    //        }
-    //    }
-
-    //    //Debug.Log("Fingertips found: " + MultiHands.FingerTipPositions.Count);
-
-    //}
-
-    //public void SpawnHandsWorld(Landmark pos)
-    //{
-    //   // RectTransform canvasRect = GetComponent<RectTransform>();
-    //    // Instantiate as child of the canvas (keeps UI layering)
-    //    // Position relative to rawImageRect (use TransformPoint -> inverse of canvas space)
-
-    //    Vector3 landmarkPos = new Vector3(
-    //        (float)pos.x,
-    //        (float)pos.y,
-    //        (float)pos.z
-    //    );
-
-    //    Debug.Log("Landmark: " + pos.ToString());
-
-    //    // Convert the world pos to the canvas local point
-    //    //Vector2 canvasLocal;
-    //    //RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, RectTransformUtility.WorldToScreenPoint(null, worldPos), null, out canvasLocal);
-
-    //    //go.position = landmarkPos;
-
-    //    Instantiate(uiPrefab,landmarkPos*100,Quaternion.identity);
-
-    //}
-
-    //protected void UpdateCurrentTarget<TValue>(TValue newTarget, ref TValue currentTarget)
-    //{
-    //    if (IsTargetChanged(newTarget, currentTarget))
-    //    {
-    //        currentTarget = newTarget;
-    //        isStale = true;
-    //    }
-    //}
-
-    //protected bool IsTargetChanged<TValue>(TValue newTarget, TValue currentTarget)
-    //{
-    //    // It's assumed that target has not changed iff previous target and new target are both null.
-    //    return currentTarget != null || newTarget != null;
-    //}
-    //public void DrawNow(HandLandmarkerResult target)
-    //{
-    //    target.CloneTo(ref _currentTarget);
-    //    SyncNow();
-    //}
 
     public void DrawLater(HandLandmarkerResult target) => UpdateCurrentTarget(target);
 

@@ -1,9 +1,3 @@
-// Copyright (c) 2023 homuler
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 using System.Collections;
 using Mediapipe.Tasks.Vision.HandLandmarker;
 using UnityEngine;
@@ -51,7 +45,6 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
         }
 
         // Use RGBA32 as the input format.
-        // TODO: When using GpuBuffer, MediaPipe assumes that the input format is BGRA, so maybe the following code needs to be fixed.
         _textureFramePool = new Mediapipe.Unity.Experimental.TextureFramePool(imageSource.textureWidth, imageSource.textureHeight, TextureFormat.RGBA32, 10);
 
         // NOTE: The screen will be resized later, keeping the aspect ratio.
@@ -69,10 +62,6 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
         var waitForEndOfFrame = new WaitForEndOfFrame();
         var result = HandLandmarkerResult.Alloc(options.numHands);
 
-        // NOTE: we can share the GL context of the render thread with MediaPipe (for now, only on Android)
-       // var canUseGpuImage = SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES3 && Mediapipe.Unity.GpuManager.GpuResources != null;
-        //using var glContext = canUseGpuImage ? Mediapipe.Unity.GpuManager.GetGlContext() : null;
-
         while (true)
         {
             if (isPaused)
@@ -88,47 +77,6 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
 
             // Build the input Image
             Mediapipe.Image image;
-            //switch (config.ImageReadMode)
-            //{
-            //    case Mediapipe.Unity.ImageReadMode.GPU:
-            //        //if (!canUseGpuImage)
-            //        //{
-            //        //    throw new System.Exception("ImageReadMode.GPU is not supported");
-            //        //}
-            //        //textureFrame.ReadTextureOnGPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-            //        //image = textureFrame.BuildGPUImage(glContext);
-            //        //// TODO: Currently we wait here for one frame to make sure the texture is fully copied to the TextureFrame before sending it to MediaPipe.
-            //        //// This usually works but is not guaranteed. Find a proper way to do this. See: https://github.com/homuler/MediaPipeUnityPlugin/pull/1311
-            //        //yield return waitForEndOfFrame;
-            //        break;
-            //    case Mediapipe.Unity.ImageReadMode.CPU:
-            //        yield return waitForEndOfFrame;
-            //        textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-            //        image = textureFrame.BuildCPUImage();
-            //        textureFrame.Release();
-
-
-            //        //running mode livetsream
-            //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
-
-            //        break;
-            //    case Mediapipe.Unity.ImageReadMode.CPUAsync:
-            //    default:
-            //        req = textureFrame.ReadTextureAsync(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-            //        yield return waitUntilReqDone;
-
-            //        if (req.hasError)
-            //        {
-            //            Debug.LogWarning($"Failed to read texture from the image source");
-            //            continue;
-            //        }
-            //        image = textureFrame.BuildCPUImage();
-            //        textureFrame.Release();
-
-            //        //running mode livetsream
-            //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
-            //        break;
-            //}
 
             req = textureFrame.ReadTextureAsync(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
             
@@ -146,56 +94,6 @@ public class HandLandMarkDetectionCore : TaskApiRunner<HandLandmarker>
             //running mode livetsream
             taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
             
-            
-            
-          //  yield return new WaitForSeconds(0.1f);
-
-
-            //if (imageSource.GetCurrentTexture().updateCount == 0)
-            //{
-            //    // No new frame
-            //    textureFrame.Release();
-            //    yield return new WaitForEndOfFrame();
-            //    continue;
-            //}
-
-            //textureFrame.ReadTextureOnCPU(imageSource.GetCurrentTexture(), flipHorizontally, flipVertically);
-            //image = textureFrame.BuildCPUImage();
-            //textureFrame.Release();
-            //yield return waitForEndOfFrame;
-
-
-            //running mode livetsream
-            // taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
-
-
-            //switch (taskApi.runningMode)
-            //{
-            //    case Mediapipe.Tasks.Vision.Core.RunningMode.IMAGE:
-            //        if (taskApi.TryDetect(image, imageProcessingOptions, ref result))
-            //        {
-            //            _handLandmarkerResultAnnotationController.DrawNow(result);
-            //        }
-            //        else
-            //        {
-            //            _handLandmarkerResultAnnotationController.DrawNow(default);
-            //        }
-            //        break;
-            //    case Mediapipe.Tasks.Vision.Core.RunningMode.VIDEO:
-            //        if (taskApi.TryDetectForVideo(image, GetCurrentTimestampMillisec(), imageProcessingOptions, ref result))
-            //        {
-            //            _handLandmarkerResultAnnotationController.DrawNow(result);
-            //        }
-            //        else
-            //        {
-            //            _handLandmarkerResultAnnotationController.DrawNow(default);
-            //        }
-            //        break;
-            //    case Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM:
-            //        taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
-            //        break;
-            //}
-
         }
     }
 

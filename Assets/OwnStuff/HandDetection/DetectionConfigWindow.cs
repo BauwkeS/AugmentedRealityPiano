@@ -24,7 +24,6 @@ public class DetectionConfigWindow : ModalContents
 
     private void Start()
     {
-      //_config = GameObject.Find("Solution").GetComponent<HandLandmarkerRunner>().config;
       _config = GameObject.Find("Solution").GetComponent<HandLandMarkDetectionCore>().config;
       InitializeContents();
     }

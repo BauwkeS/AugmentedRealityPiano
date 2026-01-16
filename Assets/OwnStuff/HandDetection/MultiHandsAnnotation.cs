@@ -1,9 +1,3 @@
-// Copyright (c) 2021 homuler
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,26 +17,14 @@ using static UnityEngine.GraphicsBuffer;
 
 
 public sealed class MultiHandsAnnotation : HierarchicalAnnotation
-//public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 {
-    //[SerializeField] private GameObject _annotationPrefab;
+    //[SerializeField] private GameObject _annotationPrefab; for the world hand
 
     [SerializeField] private GameObject _handsAnnotationPrefab;
     [SerializeField] private bool _activePianoOverlay = false;
-
-    private List<HandsAnnotation> _children;
-    private List<HandsAnnotation> children
-    {
-        get
-        {
-            if (_children == null)
-            {
-                _children = new List<HandsAnnotation>();
-            }
-            return _children;
-        }
-    }
-
+    [SerializeField] private Color _handLandmarkColor = Color.red;
+    [SerializeField] private Color _fingertipLandmarkColor = Color.blue;
+    
     public List<Vector3> FingerTipPositions
     {
         get
@@ -54,14 +36,22 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
             }
             return result;
         }
-    }
+    }    
 
 
+    private List<HandsAnnotation> _children;
+        private List<HandsAnnotation> children
+        {
+            get
+            {
+                if (_children == null)
+                {
+                    _children = new List<HandsAnnotation>();
+                }
+                return _children;
+            }
+        }
 
-    [SerializeField] private Color _handLandmarkColor = Color.red;
-    //[SerializeField] private PointListAnnotation _landmarkListAnnotation;
-    //[SerializeField] private ConnectionListAnnotation _connectionListAnnotation;
-    [SerializeField] private Color _fingertipLandmarkColor = Color.blue;
 
     private void Awake()
     {
@@ -73,15 +63,8 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 
     private void Start()
     {
-        //2 for 2 hands
-        //GameObject hand1 = Instantiate(_handsAnnotationPrefab, transform);
-        //GameObject hand2 = Instantiate(_handsAnnotationPrefab, transform);
-        //_children = new List<HandsAnnotation>();
-        //_children.AddRange(GetComponentsInChildren<HandsAnnotation>());
-
         if (_activePianoOverlay)
         {
-
             var handObjects = GetComponentsInChildren<HandsAnnotation>();
             GameObject hand1 = handObjects[0].gameObject;
             GameObject hand2 = handObjects[1].gameObject;
@@ -90,31 +73,6 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
 
             SetChildrenToLayer(hand1.transform,pMask);
             SetChildrenToLayer(hand2.transform,pMask);
-            //hand1.layer = pMask;
-            //hand2.layer = pMask;
-            //foreach (Transform child in hand1.transform)
-            //{
-            //    child.gameObject.layer = pMask;
-            //    if (child.childCount > 0)
-            //    {
-            //        foreach (Transform grandChild in child)
-            //        {
-            //            grandChild.gameObject.layer = pMask;
-
-            //        }
-            //    }
-            //}
-            //foreach (Transform child in hand2.transform)
-            //{
-            //    child.gameObject.layer = pMask;
-            //    if (child.childCount > 0)
-            //    {
-            //        foreach (Transform grandChild in child)
-            //        {
-            //            grandChild.gameObject.layer = pMask;
-            //        }
-            //    }
-            //}
         }
     }
 
@@ -164,12 +122,6 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
             });
         }
     }
-    //private HandsAnnotation InstantiateChild()
-    //{
-    //    var annotation = InstantiateChild<HandsAnnotation>(_annotationPrefab);
-    //    annotation.SetActive(true);
-    //    return annotation;
-    //}
 
     private void CallActionForAll<TArg>(IReadOnlyList<TArg> argumentList, Action<HandsAnnotation, TArg> action)
     {
@@ -177,22 +129,9 @@ public sealed class MultiHandsAnnotation : HierarchicalAnnotation
         {
             if (i >= argumentList.Count)
             {
-                // children.Count > argumentList.Count
                 action(children[i], default);
                 continue;
             }
-
-            // reset annotations
-            //if (i >= children.Count)
-            //{
-            //    // children.Count < argumentList.Count
-            //    children.Add(InstantiateChild());
-            //}
-            //else if (children[i] == null)
-            //{
-            //    // child is not initialized yet
-            //    children[i] = InstantiateChild();
-            //}
             action(children[i], argumentList[i]);
         }
     }
